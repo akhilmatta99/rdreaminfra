@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#d4400a"/>
+  <meta name="description" content="Learn about R Dream Infra — trusted real estate developer in Vijayawada, Andhra Pradesh."/>
+  <title>About Us — R Dream Infra | Vijayawada</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png"/>
+  <link rel="apple-touch-icon" href="/images/favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:#faf8f4; --white:#ffffff; --sand:#ede9e0; --border:#ddd8cc;
+      --muted:#9e9484; --body:#3d3830; --ink:#1c1a16;
+      --gold:#d4400a; --gold-lt:#fdeee8; --gold-dk:#a83108; --dark-bg:#131109;
+      --serif:'Playfair Display',Georgia,serif; --sans:'Outfit',sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family:var(--sans); background:var(--cream); color:var(--body); overflow-x:hidden; margin:0; padding:0; }
+
+    /* NAV */
+    #navbar {
+      position:fixed; top:0; left:0; right:0; z-index:9999; height:68px;
+      display:flex; align-items:center; justify-content:space-between; padding:0 5vw;
+      background:rgba(250,248,244,.97); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border); transition:box-shadow .3s;
+    }
+    #navbar.scrolled { box-shadow:0 4px 28px rgba(0,0,0,.08); }
+    .nav-logo { text-decoration:none; display:flex; align-items:center; }
+    .nav-logo img { height:50px; width:auto; display:block; object-fit:contain; }
+    .nav-menu { display:flex; gap:2rem; list-style:none; align-items:center; padding:0; margin:0; }
+    .nav-menu li { list-style:none; }
+    .nav-menu a { font-size:.78rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--body); text-decoration:none; transition:color .2s; }
+    .nav-menu a:hover { color:var(--gold); }
+    .nav-menu .nav-btn { background:var(--gold); color:#fff !important; padding:.48rem 1.2rem; border-radius:2px; }
+    .nav-menu .nav-btn:hover { background:var(--gold-dk) !important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px; }
+    .hamburger span { width:23px; height:1.5px; background:var(--ink); display:block; }
+    .mobile-menu {
+      display:none; position:fixed; top:68px; left:0; right:0; z-index:9998;
+      background:var(--cream); border-bottom:1px solid var(--border);
+      padding:1.5rem 5vw 2rem; flex-direction:column; gap:1.2rem;
+      box-shadow:0 8px 32px rgba(0,0,0,.08);
+    }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { font-size:.88rem; font-weight:500; letter-spacing:.06em; color:var(--body); text-decoration:none; text-transform:uppercase; padding-bottom:.8rem; border-bottom:1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom:none; }
+
+    /* BUTTONS */
+    .btn-gold { background:var(--gold); color:#fff; padding:.85rem 2rem; font-family:var(--sans); font-size:.8rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; border:none; border-radius:2px; cursor:pointer; text-decoration:none; display:inline-block; transition:background .25s,transform .2s; }
+    .btn-gold:hover { background:var(--gold-dk); transform:translateY(-2px); }
+    .btn-outline { border:1.5px solid var(--gold); color:var(--gold); padding:.82rem 2rem; font-family:var(--sans); font-size:.8rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; background:transparent; border-radius:2px; cursor:pointer; text-decoration:none; display:inline-block; transition:background .2s,color .2s; }
+    .btn-outline:hover { background:var(--gold); color:#fff; }
+
+    /* PAGE HERO */
+    .page-hero { background:var(--ink); padding:8rem 6vw 4rem; margin-top:68px; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; top:-80px; right:-80px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(212,64,10,.15) 0%,transparent 70%); }
+    .page-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; display:flex; align-items:center; gap:.6rem; }
+    .page-eyebrow::before { content:''; width:22px; height:1.5px; background:var(--gold); }
+    .page-title { font-family:var(--serif); font-size:clamp(2rem,4vw,3.5rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1rem; }
+    .page-title em { font-style:italic; color:var(--gold); }
+    .page-sub { font-size:.95rem; color:rgba(255,255,255,.6); max-width:540px; line-height:1.75; }
+    .breadcrumb { display:flex; align-items:center; gap:.5rem; font-size:.75rem; color:rgba(255,255,255,.4); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; transition:color .2s; }
+    .breadcrumb a:hover { color:var(--gold); }
+    .breadcrumb span { color:rgba(255,255,255,.2); }
+
+    /* FOOTER */
+    footer { background:#131109; padding:4.5rem 6vw 2rem; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3.5rem; margin-bottom:4rem; }
+    .footer-logo img { height:52px; width:auto; display:block; margin-bottom:.8rem; filter:brightness(0) invert(1); }
+    .footer-desc { font-size:.82rem; line-height:1.75; color:rgba(255,255,255,.5); max-width:260px; }
+    .footer-social { display:flex; gap:.8rem; margin-top:1.8rem; }
+    .soc-link { width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5); text-decoration:none; font-size:.78rem; transition:border-color .2s,color .2s; }
+    .soc-link:hover { border-color:var(--gold); color:var(--gold); }
+    .footer-col-title { font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.8); margin-bottom:1.4rem; }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:.8rem; padding:0; margin:0; }
+    .footer-links li { list-style:none; }
+    .footer-links a { font-size:.82rem; color:rgba(255,255,255,.5); text-decoration:none; transition:color .2s; }
+    .footer-links a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,.08); padding-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .footer-copy { font-size:.75rem; color:rgba(255,255,255,.35); }
+    .footer-legal { display:flex; gap:1.5rem; }
+    .footer-legal a { font-size:.72rem; color:rgba(255,255,255,.35); text-decoration:none; transition:color .2s; }
+    .footer-legal a:hover { color:rgba(255,255,255,.7); }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .delay-1 { transition-delay:.1s; } .delay-2 { transition-delay:.2s; } .delay-3 { transition-delay:.3s; }
+
+    /* RESPONSIVE */
+    @media (max-width:900px) { .footer-grid { grid-template-columns:1fr 1fr; gap:2.5rem; } }
+    @media (min-width:681px) { .hamburger { display:none !important; } }
+    @media (max-width:680px) {
+      .nav-menu { display:none; } .hamburger { display:flex; }
+      #navbar { padding:0 4vw; }
+      .footer-grid { grid-template-columns:1fr; gap:2rem; }
+      .footer-bottom { flex-direction:column; align-items:flex-start; }
+      footer { padding:3rem 4vw 1.5rem; }
+      .page-hero { padding:5rem 4vw 3rem; }
+    }
+
+    /* ABOUT SPECIFIC */
+    .about-intro { display:grid; grid-template-columns:1fr 1fr; gap:5vw; align-items:center; padding:5rem 6vw; background:#fff; }
+    .about-img-wrap { position:relative; }
+    .about-img { width:100%; aspect-ratio:4/5; background:url('/images/property.jpeg') center/cover no-repeat; background-color:#c8c8c8; border-radius:4px; }
+    .about-badge { position:absolute; bottom:-1.2rem; right:-1.2rem; background:var(--gold); color:#fff; padding:1.5rem 1.8rem; border-radius:3px; text-align:center; box-shadow:0 12px 40px rgba(212,64,10,.3); }
+    .badge-num { font-family:var(--serif); font-size:2.2rem; font-weight:700; line-height:1; }
+    .badge-lbl { font-size:.65rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.85); margin-top:.3rem; }
+    .about-text h2 { font-family:var(--serif); font-size:clamp(1.8rem,3vw,2.6rem); font-weight:700; color:var(--ink); line-height:1.15; margin-bottom:1.2rem; }
+    .about-text h2 em { font-style:italic; color:var(--gold); }
+    .eyebrow { display:inline-flex; align-items:center; gap:.6rem; font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.9rem; }
+    .eyebrow::before { content:''; width:22px; height:1.5px; background:var(--gold); }
+    .about-body { font-size:.92rem; line-height:1.85; color:#5a5248; margin-bottom:1rem; }
+    .stats-bar { background:var(--gold); padding:3rem 6vw; display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    .stat-item { text-align:center; padding:1rem; border-right:1px solid rgba(255,255,255,.2); }
+    .stat-item:last-child { border-right:none; }
+    .stat-num { font-family:var(--serif); font-size:2.5rem; font-weight:700; color:#fff; line-height:1; }
+    .stat-lbl { font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.85); margin-top:.4rem; }
+    .mv-section { background:var(--cream); padding:5rem 6vw; }
+    .sec-title { font-family:var(--serif); font-size:clamp(1.8rem,3vw,2.6rem); font-weight:700; color:var(--ink); line-height:1.15; margin-bottom:.8rem; }
+    .sec-title em { font-style:italic; color:var(--gold); }
+    .sec-sub { font-size:.92rem; color:var(--muted); line-height:1.72; max-width:520px; }
+    .mv-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+    .mv-card { background:#fff; border:1px solid var(--border); border-radius:4px; padding:2.5rem; }
+    .mv-icon { font-size:2.2rem; margin-bottom:1rem; display:block; }
+    .mv-title { font-family:var(--serif); font-size:1.3rem; font-weight:700; color:var(--ink); margin-bottom:.8rem; }
+    .mv-divider { width:32px; height:2px; background:var(--gold); margin-bottom:1rem; }
+    .mv-text { font-size:.88rem; line-height:1.8; color:#5a5248; }
+    .values-section { background:#131109; padding:5rem 6vw; }
+    .values-section .sec-title { color:#fff; }
+    .values-section .sec-sub { color:rgba(255,255,255,.5); }
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+    .value-card { padding:2rem 1.8rem; border:1px solid rgba(255,255,255,.08); border-radius:4px; transition:border-color .3s; }
+    .value-card:hover { border-color:rgba(212,64,10,.4); }
+    .value-title { font-size:1rem; font-weight:600; color:#fff; margin-bottom:.6rem; }
+    .value-desc { font-size:.82rem; line-height:1.7; color:rgba(255,255,255,.5); }
+    .value-divider { width:24px; height:2px; background:var(--gold); margin:1rem 0; }
+    .about-cta { background:var(--gold-lt); padding:5rem 6vw; text-align:center; }
+    .about-cta h2 { font-family:var(--serif); font-size:clamp(1.8rem,3vw,2.5rem); font-weight:700; color:var(--ink); margin-bottom:.8rem; }
+    .about-cta p { font-size:.92rem; color:var(--muted); margin-bottom:2rem; }
+    .about-cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    @media (max-width:900px) { .about-intro { grid-template-columns:1fr; padding:3.5rem 5vw; } .about-img { aspect-ratio:16/9; } .about-badge { right:.8rem; bottom:-.8rem; } .mv-grid { grid-template-columns:1fr; } .stats-bar { grid-template-columns:1fr 1fr; } .values-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:680px) { .about-intro,.mv-section,.values-section,.about-cta { padding:3rem 4vw; } .stats-bar { padding:2rem 4vw; grid-template-columns:1fr 1fr; } .values-grid { grid-template-columns:1fr; } .about-cta-btns { flex-direction:column; align-items:center; } .about-cta-btns .btn-gold,.about-cta-btns .btn-outline { width:100%; text-align:center; } }
+
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a class="nav-logo" href="/"><img src="/images/logo.png" alt="R Dream Infra"/></a>
+  <ul class="nav-menu"><li><a href="/">Home</a></li><li><a href="/about.html" style="color:var(--gold);">About</a></li><li><a href="/projects.html">Projects</a></li><li><a href="/#gallery">Gallery</a></li><li><a href="/#contact" class="nav-btn">Contact Us</a></li></ul>
+  <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" onclick="closeMobile()">Home</a>
+  <a href="/about.html" onclick="closeMobile()">About</a>
+  <a href="/projects.html" onclick="closeMobile()">Projects</a>
+  <a href="/#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="/#contact" onclick="closeMobile()">Contact Us</a>
+</div>
+<div class="page-hero">
+  <div class="breadcrumb"><a href="/">Home</a><span>/</span><span>About Us</span></div>
+  <div class="page-eyebrow">Our Story</div>
+  <h1 class="page-title">Building <em>Trust</em>, Delivering Dreams</h1>
+  <p class="page-sub">For over a decade, R Dream Infra has been shaping Vijayawada's skyline with quality, integrity, and a commitment to modern living.</p>
+</div>
+
+<div class="about-intro">
+  <div class="about-img-wrap reveal">
+    <div class="about-img"></div>
+    <div class="about-badge"><div class="badge-num">10+</div><div class="badge-lbl">Years of Trust</div></div>
+  </div>
+  <div class="about-text">
+    <div class="eyebrow reveal">Who We Are</div>
+    <h2 class="reveal delay-1">Committed to <em>Quality.</em><br>Built for You.</h2>
+    <p class="about-body reveal delay-2">R Dream Infra is a leading real estate developer based in Vijayawada, Andhra Pradesh. Founded with a vision to deliver premium homes at honest prices, we have grown into one of the most trusted names in the region's real estate market.</p>
+    <p class="about-body reveal delay-2">Every home we build carries our promise: exceptional construction quality, prime locations, Vastu-compliant designs, and on-time delivery — backed by full transparency and honest dealings.</p>
+    <div style="margin-top:2rem;" class="reveal delay-3"><a href="/#contact" class="btn-gold">Talk to Us</a></div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item reveal"><div class="stat-num">10+</div><div class="stat-lbl">Years Experience</div></div>
+  <div class="stat-item reveal delay-1"><div class="stat-num">200+</div><div class="stat-lbl">Happy Families</div></div>
+  <div class="stat-item reveal delay-2"><div class="stat-num">15+</div><div class="stat-lbl">Projects Delivered</div></div>
+  <div class="stat-item reveal delay-3"><div class="stat-num">5+</div><div class="stat-lbl">Ongoing Projects</div></div>
+</div>
+
+<div class="mv-section">
+  <div class="eyebrow reveal">What Drives Us</div>
+  <h2 class="sec-title reveal delay-1">Our Mission &amp; <em>Vision</em></h2>
+  <div class="mv-grid">
+    <div class="mv-card reveal delay-1">
+      <div class="mv-divider"></div>
+      <div class="mv-title">Our Mission</div>
+      <p class="mv-text">To deliver premium, Vastu-compliant, and sustainable residential and commercial spaces that enhance the quality of life for families and businesses in Vijayawada — on time, every time.</p>
+    </div>
+    <div class="mv-card reveal delay-2">
+      <div class="mv-divider"></div>
+      <div class="mv-title">Our Vision</div>
+      <p class="mv-text">To become Andhra Pradesh's most trusted real estate developer — known for transforming neighborhoods, setting quality benchmarks, and making the dream of owning a beautiful home a reality for every family.</p>
+    </div>
+  </div>
+</div>
+
+<div class="values-section">
+  <div class="eyebrow reveal" style="color:var(--gold);">What We Stand For</div>
+  <h2 class="sec-title reveal delay-1" style="color:#fff;">Our Core <em>Values</em></h2>
+  <p class="sec-sub reveal delay-2" style="color:rgba(255,255,255,.5);">These principles guide every decision we make.</p>
+  <div class="values-grid">
+    <div class="value-card reveal delay-1"><div class="value-divider"></div><div class="value-title">Quality First</div><p class="value-desc">We never compromise on materials, construction standards, or finish quality.</p></div>
+    <div class="value-card reveal delay-2"><div class="value-divider"></div><div class="value-title">Transparency</div><p class="value-desc">Clear pricing, honest timelines, and open communication — no hidden costs, ever.</p></div>
+    <div class="value-card reveal delay-3"><div class="value-divider"></div><div class="value-title">On-Time Delivery</div><p class="value-desc">We respect your time and your plans. Our track record speaks for itself.</p></div>
+    <div class="value-card reveal delay-1"><div class="value-divider"></div><div class="value-title">Sustainability</div><p class="value-desc">Eco-friendly construction practices and green landscaping in every project.</p></div>
+    <div class="value-card reveal delay-2"><div class="value-divider"></div><div class="value-title">Customer First</div><p class="value-desc">Our relationship doesn't end at handover — we offer post-possession support.</p></div>
+    <div class="value-card reveal delay-3"><div class="value-divider"></div><div class="value-title">Vastu Compliant</div><p class="value-desc">Every project is designed with Vastu principles for positive living.</p></div>
+  </div>
+</div>
+
+<div class="about-cta">
+  <h2 class="reveal">Ready to find your <em style="font-style:italic;color:var(--gold);">dream home?</em></h2>
+  <p class="reveal delay-1">Browse our latest projects or get in touch with our team today.</p>
+  <div class="about-cta-btns reveal delay-2">
+    <a href="/projects.html" class="btn-gold">View Projects</a>
+    <a href="/#contact" class="btn-outline">Contact Us</a>
+  </div>
+</div>
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="/images/logo.png" alt="R Dream Infra"/></div>
+      <p class="footer-desc">Building premium residential and commercial spaces in Vijayawada with a focus on quality, trust, and modern living.</p>
+      <div class="footer-social">
+        <a class="soc-link" href="#" title="Facebook">f</a>
+        <a class="soc-link" href="#" title="Instagram">in</a>
+        <a class="soc-link" href="#" title="LinkedIn">li</a>
+        <a class="soc-link" href="#" title="YouTube">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About Us</a></li>
+        <li><a href="/projects.html">Projects</a></li>
+        <li><a href="/#gallery">Gallery</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Projects</div>
+      <ul class="footer-links">
+        <li><a href="/projects.html">Dream Heights II</a></li>
+        <li><a href="/projects.html">Infra Greens</a></li>
+        <li><a href="/projects.html">Royal Villas</a></li>
+        <li><a href="/projects.html">Dream Enclave</a></li>
+        <li><a href="/projects.html">Business Park</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+919347110914">+91 93471 10914</a></li>
+        <li><a href="mailto:info@rdreaminfra.com">info@rdreaminfra.com</a></li>
+        <li><a href="#">Auto Nagar, Kanuru</a></li>
+        <li><a href="#">Vijayawada — 520007</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">R Dream Infra © 2026. All Rights Reserved.</div>
+    <div class="footer-legal">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms-of-use.html">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 30); });
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => mob.classList.toggle('open'));
+  function closeMobile() { mob.classList.remove('open'); }
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

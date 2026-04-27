@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#d4400a"/>
+  <meta name="description" content="Explore R Dream Infra's residential and commercial projects in Vijayawada — Dream Heights, Infra Greens, Royal Villas and more."/>
+  <title>Our Projects — R Dream Infra | Vijayawada</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png"/>
+  <link rel="apple-touch-icon" href="/images/favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:#faf8f4; --white:#ffffff; --sand:#ede9e0; --border:#ddd8cc;
+      --muted:#9e9484; --body:#3d3830; --ink:#1c1a16;
+      --gold:#d4400a; --gold-lt:#fdeee8; --gold-dk:#a83108; --dark-bg:#131109;
+      --serif:'Playfair Display',Georgia,serif; --sans:'Outfit',sans-serif;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--sans); background:var(--cream); color:var(--body); overflow-x:hidden; margin:0; padding:0; }
+
+    /* NAV */
+    #navbar { position:fixed; top:0; left:0; right:0; z-index:9999; height:68px; display:flex; align-items:center; justify-content:space-between; padding:0 5vw; background:rgba(250,248,244,.97); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); transition:box-shadow .3s; }
+    #navbar.scrolled { box-shadow:0 4px 28px rgba(0,0,0,.08); }
+    .nav-logo { text-decoration:none; display:flex; align-items:center; }
+    .nav-logo img { height:50px; width:auto; display:block; object-fit:contain; }
+    .nav-menu { display:flex; gap:2rem; list-style:none; align-items:center; padding:0; margin:0; }
+    .nav-menu li { list-style:none; }
+    .nav-menu a { font-size:.78rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--body); text-decoration:none; transition:color .2s; }
+    .nav-menu a:hover { color:var(--gold); }
+    .nav-menu .nav-btn { background:var(--gold); color:#fff !important; padding:.48rem 1.2rem; border-radius:2px; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:4px; }
+    .hamburger span { width:23px; height:1.5px; background:var(--ink); display:block; }
+    .mobile-menu { display:none; position:fixed; top:68px; left:0; right:0; z-index:9998; background:var(--cream); border-bottom:1px solid var(--border); padding:1.5rem 5vw 2rem; flex-direction:column; gap:1.2rem; box-shadow:0 8px 32px rgba(0,0,0,.08); }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { font-size:.88rem; font-weight:500; letter-spacing:.06em; color:var(--body); text-decoration:none; text-transform:uppercase; padding-bottom:.8rem; border-bottom:1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom:none; }
+
+    /* PAGE HERO */
+    .page-hero { background:var(--ink); padding:8rem 6vw 4rem; margin-top:68px; position:relative; overflow:hidden; }
+    .page-eyebrow { font-size:.7rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.8rem; display:flex; align-items:center; gap:.6rem; }
+    .page-eyebrow::before { content:''; width:22px; height:1.5px; background:var(--gold); }
+    .page-title { font-family:var(--serif); font-size:clamp(2rem,4vw,3.5rem); font-weight:700; color:#fff; line-height:1.1; margin-bottom:1rem; }
+    .page-title em { font-style:italic; color:var(--gold); }
+    .page-sub { font-size:.95rem; color:rgba(255,255,255,.6); max-width:540px; line-height:1.75; }
+    .breadcrumb { display:flex; align-items:center; gap:.5rem; font-size:.75rem; color:rgba(255,255,255,.4); margin-bottom:1.5rem; }
+    .breadcrumb a { color:rgba(255,255,255,.4); text-decoration:none; }
+    .breadcrumb span { color:rgba(255,255,255,.2); }
+
+    /* FILTER */
+    .filter-bar { background:#fff; padding:1.5rem 6vw; border-bottom:1px solid var(--border); display:flex; gap:.8rem; flex-wrap:wrap; align-items:center; position:sticky; top:68px; z-index:100; }
+    .filter-btn { padding:.45rem 1.2rem; font-size:.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; border:1.5px solid var(--border); background:transparent; color:var(--body); border-radius:20px; cursor:pointer; transition:all .2s; }
+    .filter-btn:hover, .filter-btn.active { background:var(--gold); color:#fff; border-color:var(--gold); }
+
+    /* PROJECTS */
+    .projects-wrap { padding:4rem 6vw 6rem; }
+    .proj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.8rem; }
+    .proj-card { background:#fff; border:1px solid var(--border); border-radius:4px; overflow:hidden; cursor:pointer; transition:transform .3s,box-shadow .3s; }
+    .proj-card:hover { transform:translateY(-5px); box-shadow:0 20px 56px rgba(0,0,0,.1); }
+    .proj-card.hidden { display:none; }
+    .proj-img { aspect-ratio:4/3; background:url('/images/property.jpeg') center/cover no-repeat; background-color:#c8d5c8; position:relative; overflow:hidden; }
+    .proj-img::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 55%); }
+    .proj-status { position:absolute; top:1rem; left:1rem; z-index:2; font-size:.65rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .8rem; border-radius:2px; }
+    .status-ongoing { background:var(--gold); color:#fff; }
+    .status-upcoming { background:var(--ink); color:#fff; }
+    .status-ready { background:#2e7d32; color:#fff; }
+    .proj-price { position:absolute; bottom:1rem; left:1rem; z-index:2; font-family:var(--serif); font-size:1.4rem; font-weight:600; color:#fff; }
+    .proj-body { padding:1.4rem 1.6rem 1.7rem; }
+    .proj-name { font-family:var(--serif); font-size:1.15rem; font-weight:600; color:var(--ink); margin-bottom:.3rem; }
+    .proj-loc { font-size:.78rem; color:var(--muted); margin-bottom:.6rem; }
+    .proj-tag { font-size:.75rem; color:var(--gold); font-weight:500; }
+
+    /* MODAL */
+    .proj-modal-overlay { display:none; position:fixed; inset:0; z-index:99997; background:rgba(10,9,7,.78); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:1.5rem; }
+    .proj-modal-overlay.open { display:flex; }
+    .proj-modal { background:#fff; border-radius:6px; max-width:860px; width:100%; max-height:90vh; overflow-y:auto; position:relative; box-shadow:0 32px 80px rgba(0,0,0,.35); animation:modalIn .35s ease; }
+    @keyframes modalIn { from{opacity:0;transform:translateY(30px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+    .modal-close { position:sticky; top:0; float:right; margin:.8rem .8rem 0 0; width:40px; height:40px; border-radius:50%; background:var(--ink); color:#fff; border:none; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; z-index:20; }
+    .modal-close:hover { background:var(--gold); }
+    .modal-hero-img { width:100%; height:280px; background:url('/images/property.jpeg') center/cover no-repeat; background-color:#c8c8c8; border-radius:6px 6px 0 0; position:relative; }
+    .modal-hero-img::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 55%); border-radius:6px 6px 0 0; }
+    .modal-hero-price { position:absolute; bottom:1.2rem; left:1.5rem; z-index:2; font-family:var(--serif); font-size:1.8rem; font-weight:700; color:#fff; }
+    .modal-hero-status { position:absolute; top:1.2rem; left:1.5rem; z-index:2; font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.32rem .85rem; border-radius:2px; }
+    .modal-body { padding:2rem 2.2rem 2.5rem; }
+    .modal-title { font-family:var(--serif); font-size:1.6rem; font-weight:700; color:var(--ink); margin-bottom:.3rem; }
+    .modal-loc { font-size:.82rem; color:var(--muted); margin-bottom:1.5rem; }
+    .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2rem; }
+    .modal-section-title { font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.9rem; display:flex; align-items:center; gap:.5rem; }
+    .modal-section-title::before { content:''; width:16px; height:1.5px; background:var(--gold); }
+    .modal-specs { display:flex; flex-direction:column; gap:.6rem; }
+    .modal-spec-row { display:flex; justify-content:space-between; align-items:center; padding:.55rem 0; border-bottom:1px solid var(--sand); font-size:.85rem; }
+    .modal-spec-row:last-child { border-bottom:none; }
+    .spec-key { color:var(--muted); }
+    .spec-val { color:var(--ink); font-weight:500; }
+    .modal-amenities { display:flex; flex-wrap:wrap; gap:.6rem; }
+    .amenity-tag { background:var(--gold-lt); color:var(--gold-dk); font-size:.75rem; font-weight:500; padding:.35rem .85rem; border-radius:20px; border:1px solid rgba(212,64,10,.15); }
+    .modal-desc { font-size:.88rem; line-height:1.8; color:#5a5248; margin-bottom:2rem; padding:1.2rem 1.5rem; background:var(--cream); border-radius:4px; border-left:3px solid var(--gold); }
+    .modal-footer { display:flex; gap:1rem; flex-wrap:wrap; padding-top:1.5rem; border-top:1px solid var(--sand); }
+    .btn-gold { background:var(--gold); color:#fff; padding:.85rem 2rem; font-family:var(--sans); font-size:.8rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; border:none; border-radius:2px; cursor:pointer; text-decoration:none; display:inline-block; transition:background .25s; }
+    .btn-gold:hover { background:var(--gold-dk); }
+    .btn-outline { border:1.5px solid var(--gold); color:var(--gold); padding:.82rem 2rem; font-family:var(--sans); font-size:.8rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; background:transparent; border-radius:2px; cursor:pointer; text-decoration:none; display:inline-block; }
+
+    /* FOOTER */
+    footer { background:#131109; padding:4.5rem 6vw 2rem; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3.5rem; margin-bottom:4rem; }
+    .footer-logo img { height:52px; width:auto; display:block; margin-bottom:.8rem; filter:brightness(0) invert(1); }
+    .footer-desc { font-size:.82rem; line-height:1.75; color:rgba(255,255,255,.5); max-width:260px; }
+    .footer-social { display:flex; gap:.8rem; margin-top:1.8rem; }
+    .soc-link { width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5); text-decoration:none; font-size:.78rem; transition:border-color .2s,color .2s; }
+    .soc-link:hover { border-color:var(--gold); color:var(--gold); }
+    .footer-col-title { font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.8); margin-bottom:1.4rem; }
+    .footer-links { list-style:none; display:flex; flex-direction:column; gap:.8rem; padding:0; margin:0; }
+    .footer-links li { list-style:none; }
+    .footer-links a { font-size:.82rem; color:rgba(255,255,255,.5); text-decoration:none; transition:color .2s; }
+    .footer-links a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,.08); padding-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    .footer-copy { font-size:.75rem; color:rgba(255,255,255,.35); }
+    .footer-legal { display:flex; gap:1.5rem; }
+    .footer-legal a { font-size:.72rem; color:rgba(255,255,255,.35); text-decoration:none; }
+    .footer-legal a:hover { color:rgba(255,255,255,.7); }
+
+    /* LIGHTBOX */
+    .lightbox { display:none; position:fixed; inset:0; z-index:99998; background:rgba(0,0,0,.92); align-items:center; justify-content:center; }
+    .lightbox.open { display:flex; }
+    .lightbox-img { max-width:90vw; max-height:85vh; border-radius:3px; }
+    .lb-close { position:absolute; top:1.5rem; right:1.5rem; background:none; border:none; color:rgba(255,255,255,.7); font-size:2rem; cursor:pointer; }
+
+    /* RESPONSIVE */
+    @media (max-width:900px) { .proj-grid { grid-template-columns:1fr 1fr; } .modal-grid { grid-template-columns:1fr; } .footer-grid { grid-template-columns:1fr 1fr; gap:2.5rem; } }
+    @media (min-width:681px) { .hamburger { display:none !important; } }
+    @media (max-width:680px) {
+      .nav-menu { display:none; } .hamburger { display:flex; } #navbar { padding:0 4vw; }
+      .proj-grid { grid-template-columns:1fr; }
+      .projects-wrap { padding:2.5rem 4vw 4rem; }
+      .filter-bar { padding:1rem 4vw; }
+      .proj-modal-overlay { padding:0; align-items:flex-end; }
+      .proj-modal { max-height:92vh; border-radius:16px 16px 0 0; }
+      .modal-hero-img { height:200px; border-radius:16px 16px 0 0; }
+      .modal-body { padding:1.2rem 1rem 2rem; }
+      .modal-footer { flex-direction:column; gap:.8rem; }
+      .modal-footer .btn-gold,.modal-footer .btn-outline { width:100%; text-align:center; }
+      .footer-grid { grid-template-columns:1fr; gap:2rem; }
+      .footer-bottom { flex-direction:column; align-items:flex-start; }
+      footer { padding:3rem 4vw 1.5rem; }
+      .page-hero { padding:5rem 4vw 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a class="nav-logo" href="/"><img src="/images/logo.png" alt="R Dream Infra"/></a>
+  <ul class="nav-menu">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about.html">About</a></li>
+    <li><a href="/projects.html" style="color:var(--gold);">Projects</a></li>
+    <li><a href="/#gallery">Gallery</a></li>
+    <li><a href="/#contact" class="nav-btn">Contact Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" onclick="closeMobile()">Home</a>
+  <a href="/about.html" onclick="closeMobile()">About</a>
+  <a href="/projects.html" onclick="closeMobile()">Projects</a>
+  <a href="/#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="/#contact" onclick="closeMobile()">Contact Us</a>
+</div>
+
+<div class="page-hero">
+  <div class="breadcrumb"><a href="/">Home</a><span>/</span><span>Projects</span></div>
+  <div class="page-eyebrow">Our Portfolio</div>
+  <h1 class="page-title">Our Signature <em>Projects</em></h1>
+  <p class="page-sub">Explore our ongoing, upcoming, and completed ventures — crafted for modern families in Vijayawada.</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterProjects('all',this)">All Projects</button>
+  <button class="filter-btn" onclick="filterProjects('ongoing',this)">Ongoing</button>
+  <button class="filter-btn" onclick="filterProjects('upcoming',this)">Upcoming</button>
+  <button class="filter-btn" onclick="filterProjects('ready',this)">Ready to Move</button>
+</div>
+
+<div class="projects-wrap">
+  <div class="proj-grid">
+    <div class="proj-card" data-status="ongoing" data-modal="modal-1">
+      <div class="proj-img"><span class="proj-status status-ongoing">Ongoing</span><div class="proj-price">From ₹75 L</div></div>
+      <div class="proj-body"><div class="proj-name">Dream Heights — Phase II</div><div class="proj-loc">Tadepalli, Vijayawada</div><div class="proj-tag">2 BHK &amp; 3 BHK · Gated Community · Club House</div></div>
+    </div>
+    <div class="proj-card" data-status="ready" data-modal="modal-2">
+      <div class="proj-img"><span class="proj-status status-ready">Ready to Move</span><div class="proj-price">From ₹48 L</div></div>
+      <div class="proj-body"><div class="proj-name">Infra Greens</div><div class="proj-loc">Kanuru, Vijayawada</div><div class="proj-tag">2 BHK · Rooftop Garden · EV Charging</div></div>
+    </div>
+    <div class="proj-card" data-status="upcoming" data-modal="modal-3">
+      <div class="proj-img"><span class="proj-status status-upcoming">Upcoming</span><div class="proj-price">From ₹1.2 Cr</div></div>
+      <div class="proj-body"><div class="proj-name">Royal Villas</div><div class="proj-loc">Undavalli, Vijayawada</div><div class="proj-tag">4 BHK Villas · Private Pool Option</div></div>
+    </div>
+    <div class="proj-card" data-status="ongoing" data-modal="modal-4">
+      <div class="proj-img"><span class="proj-status status-ongoing">Ongoing</span><div class="proj-price">From ₹38 L</div></div>
+      <div class="proj-body"><div class="proj-name">Dream Enclave</div><div class="proj-loc">Benz Circle, Vijayawada</div><div class="proj-tag">2 BHK · Smart Home · Prime Location</div></div>
+    </div>
+    <div class="proj-card" data-status="upcoming" data-modal="modal-5">
+      <div class="proj-img"><span class="proj-status status-upcoming">Upcoming</span><div class="proj-price">On Request</div></div>
+      <div class="proj-body"><div class="proj-name">Infra Business Park</div><div class="proj-loc">Vijayawada Ring Road</div><div class="proj-tag">Commercial · Office Suites · Retail Shops</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="proj-modal-overlay" id="modal-1" onclick="if(event.target===this)closeModal('modal-1')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-1')">✕</button>
+    <div class="modal-hero-img"><span class="modal-hero-status status-ongoing">Ongoing</span><div class="modal-hero-price">From ₹75 Lakhs</div></div>
+    <div class="modal-body">
+      <div class="modal-title">Dream Heights — Phase II</div>
+      <div class="modal-loc">Tadepalli, Vijayawada, Andhra Pradesh</div>
+      <p class="modal-desc">Premium gated community offering spacious 2 &amp; 3 BHK apartments in Tadepalli. Every unit is Vastu-compliant with world-class amenities and serene green surroundings.</p>
+      <div class="modal-grid">
+        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
+          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">2 BHK &amp; 3 BHK</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Total Units</span><span class="spec-val">120 Units</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">1,100 – 1,800 sq ft</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Floors</span><span class="spec-val">G + 9 Floors</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Dec 2026</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹75L – ₹1.1 Cr</span></div>
+        </div></div>
+        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
+          <span class="amenity-tag">Swimming Pool</span><span class="amenity-tag">Gym</span>
+          <span class="amenity-tag">Landscaped Garden</span><span class="amenity-tag">Club House</span>
+          <span class="amenity-tag">24/7 Security</span><span class="amenity-tag">Covered Parking</span>
+          <span class="amenity-tag">Power Backup</span><span class="amenity-tag">Vastu Compliant</span>
+        </div></div>
+      </div>
+      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-1')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="proj-modal-overlay" id="modal-2" onclick="if(event.target===this)closeModal('modal-2')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-2')">✕</button>
+    <div class="modal-hero-img"><span class="modal-hero-status status-ready">Ready to Move</span><div class="modal-hero-price">From ₹48 Lakhs</div></div>
+    <div class="modal-body">
+      <div class="modal-title">Infra Greens</div>
+      <div class="modal-loc">Kanuru, Vijayawada, Andhra Pradesh</div>
+      <p class="modal-desc">Compact yet elegant 2 BHK apartments in rapidly growing Kanuru. Ready to move — featuring rooftop garden, EV charging, and smart home features ideal for young professionals.</p>
+      <div class="modal-grid">
+        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
+          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">2 BHK</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Total Units</span><span class="spec-val">64 Units</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">950 – 1,250 sq ft</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Floors</span><span class="spec-val">G + 6 Floors</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Ready to Move</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹48L – ₹62L</span></div>
+        </div></div>
+        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
+          <span class="amenity-tag">Rooftop Garden</span><span class="amenity-tag">EV Charging</span>
+          <span class="amenity-tag">Gym</span><span class="amenity-tag">Smart Home</span>
+          <span class="amenity-tag">24/7 Security</span><span class="amenity-tag">Power Backup</span>
+        </div></div>
+      </div>
+      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-2')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="proj-modal-overlay" id="modal-3" onclick="if(event.target===this)closeModal('modal-3')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-3')">✕</button>
+    <div class="modal-hero-img"><span class="modal-hero-status status-upcoming">Upcoming</span><div class="modal-hero-price">From ₹1.2 Crore</div></div>
+    <div class="modal-body">
+      <div class="modal-title">Royal Villas</div>
+      <div class="modal-loc">Undavalli, Vijayawada, Andhra Pradesh</div>
+      <p class="modal-desc">Luxurious independent villas in serene Undavalli on the banks of the Krishna River. Optional private pools, expansive gardens, and premium finishes.</p>
+      <div class="modal-grid">
+        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
+          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">4 BHK Villas</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Total Villas</span><span class="spec-val">24 Units</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Plot Area</span><span class="spec-val">200 – 400 sq yds</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Mid 2027</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹1.2 Cr – ₹2.5 Cr</span></div>
+        </div></div>
+        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
+          <span class="amenity-tag">Private Pool Option</span><span class="amenity-tag">Private Garden</span>
+          <span class="amenity-tag">Club House</span><span class="amenity-tag">Gated Security</span>
+          <span class="amenity-tag">Smart Home</span><span class="amenity-tag">Vastu Compliant</span>
+        </div></div>
+      </div>
+      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-3')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="proj-modal-overlay" id="modal-4" onclick="if(event.target===this)closeModal('modal-4')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-4')">✕</button>
+    <div class="modal-hero-img"><span class="modal-hero-status status-ongoing">Ongoing</span><div class="modal-hero-price">From ₹38 Lakhs</div></div>
+    <div class="modal-body">
+      <div class="modal-title">Dream Enclave</div>
+      <div class="modal-loc">Benz Circle, Vijayawada, Andhra Pradesh</div>
+      <p class="modal-desc">Affordable smart homes at Vijayawada's most vibrant location — Benz Circle. Perfect for first-time buyers, investors, and small families.</p>
+      <div class="modal-grid">
+        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
+          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">2 BHK</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Total Units</span><span class="spec-val">80 Units</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">850 – 1,100 sq ft</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Mar 2026</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹38L – ₹52L</span></div>
+        </div></div>
+        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
+          <span class="amenity-tag">Smart Home</span><span class="amenity-tag">Gym</span>
+          <span class="amenity-tag">24/7 Security</span><span class="amenity-tag">Parking</span>
+          <span class="amenity-tag">Power Backup</span><span class="amenity-tag">Vastu Compliant</span>
+        </div></div>
+      </div>
+      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-4')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="proj-modal-overlay" id="modal-5" onclick="if(event.target===this)closeModal('modal-5')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-5')">✕</button>
+    <div class="modal-hero-img"><span class="modal-hero-status status-upcoming">Upcoming</span><div class="modal-hero-price">Price on Request</div></div>
+    <div class="modal-body">
+      <div class="modal-title">Infra Business Park</div>
+      <div class="modal-loc">Vijayawada Ring Road, Andhra Pradesh</div>
+      <p class="modal-desc">Upcoming commercial landmark on the Ring Road offering modern office suites, retail shops, and commercial spaces with excellent connectivity.</p>
+      <div class="modal-grid">
+        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
+          <div class="modal-spec-row"><span class="spec-key">Type</span><span class="spec-val">Commercial</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Spaces</span><span class="spec-val">Office, Retail, Showroom</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">500 – 5,000 sq ft</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Floors</span><span class="spec-val">G + 12 Floors</span></div>
+          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">2028</span></div>
+        </div></div>
+        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
+          <span class="amenity-tag">Premium Lobby</span><span class="amenity-tag">Ample Parking</span>
+          <span class="amenity-tag">Power Backup</span><span class="amenity-tag">24/7 Security</span>
+          <span class="amenity-tag">Passenger Lifts</span><span class="amenity-tag">Food Court</span>
+        </div></div>
+      </div>
+      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-5')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lbImg" src="" alt="Project"/>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="/images/logo.png" alt="R Dream Infra"/></div>
+      <p class="footer-desc">Building premium residential and commercial spaces in Vijayawada with a focus on quality, trust, and modern living.</p>
+      <div class="footer-social">
+        <a class="soc-link" href="#" title="Facebook">f</a>
+        <a class="soc-link" href="#" title="Instagram">in</a>
+        <a class="soc-link" href="#" title="LinkedIn">li</a>
+        <a class="soc-link" href="#" title="YouTube">▶</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/about.html">About Us</a></li>
+        <li><a href="/projects.html">Projects</a></li><li><a href="/#gallery">Gallery</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Projects</div>
+      <ul class="footer-links">
+        <li><a href="/projects.html">Dream Heights II</a></li><li><a href="/projects.html">Infra Greens</a></li>
+        <li><a href="/projects.html">Royal Villas</a></li><li><a href="/projects.html">Dream Enclave</a></li>
+        <li><a href="/projects.html">Business Park</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+919347110914">+91 93471 10914</a></li>
+        <li><a href="mailto:info@rdreaminfra.com">info@rdreaminfra.com</a></li>
+        <li><a href="#">Auto Nagar, Kanuru</a></li>
+        <li><a href="#">Vijayawada — 520007</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">R Dream Infra © 2026. All Rights Reserved.</div>
+    <div class="footer-legal"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-use.html">Terms of Use</a></div>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 30); });
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => mob.classList.toggle('open'));
+  function closeMobile() { mob.classList.remove('open'); }
+
+  // Filter
+  function filterProjects(status, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.proj-card').forEach(card => {
+      if (status === 'all' || card.dataset.status === status) card.classList.remove('hidden');
+      else card.classList.add('hidden');
+    });
+  }
+
+  // Cards clickable
+  document.querySelectorAll('.proj-card').forEach(card => {
+    card.addEventListener('click', function() { openModal(this.dataset.modal); });
+  });
+
+  // Modals
+  function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+  function openLightbox(src) { document.getElementById('lbImg').src=src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+  document.addEventListener('keydown', e => { if (e.key==='Escape') { document.querySelectorAll('.proj-modal-overlay.open').forEach(m=>{m.classList.remove('open');document.body.style.overflow='';}); closeLightbox(); }});
+</script>
+</body>
+</html>
