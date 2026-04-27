@@ -4,8 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="theme-color" content="#d4400a"/>
-  <meta name="description" content="Explore R Dream Infra's residential and commercial projects in Vijayawada — Dream Heights, Infra Greens, Royal Villas and more."/>
-  <title>Our Projects — R Dream Infra | Vijayawada</title>
+  <meta name="description" content="Explore R Dream Infra's residential and commercial projects in Vijayawada — <title>Our Projects — R Dream Infra | Vijayawada</title>
   <link rel="icon" type="image/png" href="/images/favicon.png"/>
   <link rel="apple-touch-icon" href="/images/favicon.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -177,171 +176,143 @@
 
 <div class="filter-bar">
   <button class="filter-btn active" onclick="filterProjects('all',this)">All Projects</button>
-  <button class="filter-btn" onclick="filterProjects('ongoing',this)">Ongoing</button>
-  <button class="filter-btn" onclick="filterProjects('upcoming',this)">Upcoming</button>
-  <button class="filter-btn" onclick="filterProjects('ready',this)">Ready to Move</button>
+  <button class="filter-btn" onclick="filterProjects('ongoing',this)">Phase 2 Open</button>
+  <button class="filter-btn" onclick="filterProjects('soldout',this)">Sold Out</button>
 </div>
 
 <div class="projects-wrap">
   <div class="proj-grid">
-    <div class="proj-card" data-status="ongoing" data-modal="modal-1">
-      <div class="proj-img"><span class="proj-status status-ongoing">Ongoing</span><div class="proj-price">From ₹75 L</div></div>
-      <div class="proj-body"><div class="proj-name">Dream Heights — Phase II</div><div class="proj-loc">Tadepalli, Vijayawada</div><div class="proj-tag">2 BHK &amp; 3 BHK · Gated Community · Club House</div></div>
+
+    <!-- Dream Land Phase 2 - FEATURED -->
+    <div class="proj-card card-wide" data-status="ongoing" data-modal="modal-dreamland">
+      <div class="proj-img" style="background:url('/images/dreamland-phase2.jpg') center/cover no-repeat;background-color:#c8d5c8;">
+        <span class="proj-status status-ongoing">Phase 2 — Now Open</span>
+        <div class="proj-price">₹2,00,000 / 100 Sq.Yds</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-name">Dream Land Projects — Konayapalem</div>
+        <div class="proj-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+        <div class="proj-tag">Residential Plots · 100 Sq. Yards · Phase 2 Launched 13 Mar 2026</div>
+      </div>
     </div>
-    <div class="proj-card" data-status="ready" data-modal="modal-2">
-      <div class="proj-img"><span class="proj-status status-ready">Ready to Move</span><div class="proj-price">From ₹48 L</div></div>
-      <div class="proj-body"><div class="proj-name">Infra Greens</div><div class="proj-loc">Kanuru, Vijayawada</div><div class="proj-tag">2 BHK · Rooftop Garden · EV Charging</div></div>
+
+    <!-- Dream Land Phase 1 - SOLD OUT -->
+    <div class="proj-card" data-status="soldout" data-modal="modal-dreamland-p1">
+      <div class="proj-img" style="background:url('/images/dreamland-phase1.jpg') center/cover no-repeat;background-color:#c8d5c8;">
+        <span class="proj-status status-soldout">Sold Out</span>
+        <div class="proj-price">Phase 1</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-name">Dream Land Projects — Phase 1</div>
+        <div class="proj-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+        <div class="proj-tag">Residential Plots · 100 Sq. Yards · Launched 12 Jan 2026</div>
+      </div>
     </div>
-    <div class="proj-card" data-status="upcoming" data-modal="modal-3">
-      <div class="proj-img"><span class="proj-status status-upcoming">Upcoming</span><div class="proj-price">From ₹1.2 Cr</div></div>
-      <div class="proj-body"><div class="proj-name">Royal Villas</div><div class="proj-loc">Undavalli, Vijayawada</div><div class="proj-tag">4 BHK Villas · Private Pool Option</div></div>
-    </div>
-    <div class="proj-card" data-status="ongoing" data-modal="modal-4">
-      <div class="proj-img"><span class="proj-status status-ongoing">Ongoing</span><div class="proj-price">From ₹38 L</div></div>
-      <div class="proj-body"><div class="proj-name">Dream Enclave</div><div class="proj-loc">Benz Circle, Vijayawada</div><div class="proj-tag">2 BHK · Smart Home · Prime Location</div></div>
-    </div>
-    <div class="proj-card" data-status="upcoming" data-modal="modal-5">
-      <div class="proj-img"><span class="proj-status status-upcoming">Upcoming</span><div class="proj-price">On Request</div></div>
-      <div class="proj-body"><div class="proj-name">Infra Business Park</div><div class="proj-loc">Vijayawada Ring Road</div><div class="proj-tag">Commercial · Office Suites · Retail Shops</div></div>
-    </div>
+
+  </div>
   </div>
 </div>
 
 <!-- MODALS -->
-<div class="proj-modal-overlay" id="modal-1" onclick="if(event.target===this)closeModal('modal-1')">
+
+<!-- DREAM LAND PHASE 2 MODAL -->
+<div class="proj-modal-overlay" id="modal-dreamland" onclick="if(event.target===this)closeModal('modal-dreamland')">
   <div class="proj-modal">
-    <button class="modal-close" onclick="closeModal('modal-1')">✕</button>
-    <div class="modal-hero-img"><span class="modal-hero-status status-ongoing">Ongoing</span><div class="modal-hero-price">From ₹75 Lakhs</div></div>
+    <button class="modal-close" onclick="closeModal('modal-dreamland')">✕</button>
+    <div class="modal-hero-img" style="background:url('/images/dreamland-phase2.jpg') center/cover no-repeat;background-color:#c8c8c8;">
+      <span class="modal-hero-status status-ongoing">Phase 2 — Now Open</span>
+      <div class="modal-hero-price">₹2,00,000 / 100 Sq.Yds</div>
+    </div>
     <div class="modal-body">
-      <div class="modal-title">Dream Heights — Phase II</div>
-      <div class="modal-loc">Tadepalli, Vijayawada, Andhra Pradesh</div>
-      <p class="modal-desc">Premium gated community offering spacious 2 &amp; 3 BHK apartments in Tadepalli. Every unit is Vastu-compliant with world-class amenities and serene green surroundings.</p>
-      <div class="modal-grid">
-        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
-          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">2 BHK &amp; 3 BHK</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Total Units</span><span class="spec-val">120 Units</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">1,100 – 1,800 sq ft</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Floors</span><span class="spec-val">G + 9 Floors</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Dec 2026</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹75L – ₹1.1 Cr</span></div>
-        </div></div>
-        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
-          <span class="amenity-tag">Swimming Pool</span><span class="amenity-tag">Gym</span>
-          <span class="amenity-tag">Landscaped Garden</span><span class="amenity-tag">Club House</span>
-          <span class="amenity-tag">24/7 Security</span><span class="amenity-tag">Covered Parking</span>
-          <span class="amenity-tag">Power Backup</span><span class="amenity-tag">Vastu Compliant</span>
-        </div></div>
+      <div class="modal-title">Dream Land Projects — Konayapalem</div>
+      <div class="modal-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+      <div style="margin-bottom:1rem;">
+        <span style="display:inline-block;background:#c62828;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:12px;">Phase 1 — Sold Out</span>
+        &nbsp;
+        <span style="display:inline-block;background:#e8f5e9;color:#2e7d32;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:12px;">Phase 2 — Available Now</span>
       </div>
-      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-1')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+      <p class="modal-desc">Dream Land Projects is our flagship plot venture near Nandigama. Phase 1 was a grand success and completely sold out. Phase 2 officially launched on 13th March 2026 with premium residential plots at an exclusive price.</p>
+      <div class="modal-grid">
+        <div>
+          <div class="modal-section-title">Project Details</div>
+          <div class="modal-specs">
+            <div class="modal-spec-row"><span class="spec-key">Type</span><span class="spec-val">Residential Plots</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Plot Size</span><span class="spec-val">100 Sq. Yards</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹2,00,000 per plot</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Phase 1</span><span class="spec-val">Sold Out ✓</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Phase 2 Launch</span><span class="spec-val">13 March 2026</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Location</span><span class="spec-val">Near Nandigama, AP</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-title">Highlights</div>
+          <div class="modal-amenities">
+            <span class="amenity-tag">Clear Title Deeds</span>
+            <span class="amenity-tag">Spot Registration</span>
+            <span class="amenity-tag">Near Nandigama</span>
+            <span class="amenity-tag">Road Access</span>
+            <span class="amenity-tag">Vastu Compliant</span>
+            <span class="amenity-tag">Affordable Price</span>
+          </div>
+          <div style="margin-top:1.2rem;padding:1rem;background:#e8f5e9;border-radius:6px;border-left:3px solid #2e7d32;">
+            <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" style="font-size:.85rem;color:#2e7d32;text-decoration:none;display:flex;align-items:center;gap:.4rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              View on Google Maps →
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="/#contact" class="btn-gold">Enquire Now</a>
+        <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" class="btn-outline">Get Directions</a>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="proj-modal-overlay" id="modal-2" onclick="if(event.target===this)closeModal('modal-2')">
+<!-- DREAM LAND PHASE 1 MODAL -->
+<div class="proj-modal-overlay" id="modal-dreamland-p1" onclick="if(event.target===this)closeModal('modal-dreamland-p1')">
   <div class="proj-modal">
-    <button class="modal-close" onclick="closeModal('modal-2')">✕</button>
-    <div class="modal-hero-img"><span class="modal-hero-status status-ready">Ready to Move</span><div class="modal-hero-price">From ₹48 Lakhs</div></div>
-    <div class="modal-body">
-      <div class="modal-title">Infra Greens</div>
-      <div class="modal-loc">Kanuru, Vijayawada, Andhra Pradesh</div>
-      <p class="modal-desc">Compact yet elegant 2 BHK apartments in rapidly growing Kanuru. Ready to move — featuring rooftop garden, EV charging, and smart home features ideal for young professionals.</p>
-      <div class="modal-grid">
-        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
-          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">2 BHK</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Total Units</span><span class="spec-val">64 Units</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">950 – 1,250 sq ft</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Floors</span><span class="spec-val">G + 6 Floors</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Ready to Move</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹48L – ₹62L</span></div>
-        </div></div>
-        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
-          <span class="amenity-tag">Rooftop Garden</span><span class="amenity-tag">EV Charging</span>
-          <span class="amenity-tag">Gym</span><span class="amenity-tag">Smart Home</span>
-          <span class="amenity-tag">24/7 Security</span><span class="amenity-tag">Power Backup</span>
-        </div></div>
-      </div>
-      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-2')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+    <button class="modal-close" onclick="closeModal('modal-dreamland-p1')">✕</button>
+    <div class="modal-hero-img" style="background:url('/images/dreamland-phase1.jpg') center/cover no-repeat;background-color:#c8c8c8;">
+      <span class="modal-hero-status status-soldout">Sold Out</span>
+      <div class="modal-hero-price">Phase 1 — Completed</div>
     </div>
-  </div>
-</div>
-
-<div class="proj-modal-overlay" id="modal-3" onclick="if(event.target===this)closeModal('modal-3')">
-  <div class="proj-modal">
-    <button class="modal-close" onclick="closeModal('modal-3')">✕</button>
-    <div class="modal-hero-img"><span class="modal-hero-status status-upcoming">Upcoming</span><div class="modal-hero-price">From ₹1.2 Crore</div></div>
     <div class="modal-body">
-      <div class="modal-title">Royal Villas</div>
-      <div class="modal-loc">Undavalli, Vijayawada, Andhra Pradesh</div>
-      <p class="modal-desc">Luxurious independent villas in serene Undavalli on the banks of the Krishna River. Optional private pools, expansive gardens, and premium finishes.</p>
-      <div class="modal-grid">
-        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
-          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">4 BHK Villas</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Total Villas</span><span class="spec-val">24 Units</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Plot Area</span><span class="spec-val">200 – 400 sq yds</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Mid 2027</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹1.2 Cr – ₹2.5 Cr</span></div>
-        </div></div>
-        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
-          <span class="amenity-tag">Private Pool Option</span><span class="amenity-tag">Private Garden</span>
-          <span class="amenity-tag">Club House</span><span class="amenity-tag">Gated Security</span>
-          <span class="amenity-tag">Smart Home</span><span class="amenity-tag">Vastu Compliant</span>
-        </div></div>
+      <div class="modal-title">Dream Land Projects — Phase 1</div>
+      <div class="modal-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+      <div style="margin-bottom:1rem;">
+        <span style="display:inline-block;background:#c62828;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:12px;">Phase 1 — 100% Sold Out</span>
       </div>
-      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-3')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
-    </div>
-  </div>
-</div>
-
-<div class="proj-modal-overlay" id="modal-4" onclick="if(event.target===this)closeModal('modal-4')">
-  <div class="proj-modal">
-    <button class="modal-close" onclick="closeModal('modal-4')">✕</button>
-    <div class="modal-hero-img"><span class="modal-hero-status status-ongoing">Ongoing</span><div class="modal-hero-price">From ₹38 Lakhs</div></div>
-    <div class="modal-body">
-      <div class="modal-title">Dream Enclave</div>
-      <div class="modal-loc">Benz Circle, Vijayawada, Andhra Pradesh</div>
-      <p class="modal-desc">Affordable smart homes at Vijayawada's most vibrant location — Benz Circle. Perfect for first-time buyers, investors, and small families.</p>
+      <p class="modal-desc">Dream Land Projects Phase 1 was a grand success — all plots were sold out shortly after launch on 12th January 2026. Phase 2 is now open!</p>
       <div class="modal-grid">
-        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
-          <div class="modal-spec-row"><span class="spec-key">Configuration</span><span class="spec-val">2 BHK</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Total Units</span><span class="spec-val">80 Units</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">850 – 1,100 sq ft</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">Mar 2026</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹38L – ₹52L</span></div>
-        </div></div>
-        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
-          <span class="amenity-tag">Smart Home</span><span class="amenity-tag">Gym</span>
-          <span class="amenity-tag">24/7 Security</span><span class="amenity-tag">Parking</span>
-          <span class="amenity-tag">Power Backup</span><span class="amenity-tag">Vastu Compliant</span>
-        </div></div>
+        <div>
+          <div class="modal-section-title">Project Details</div>
+          <div class="modal-specs">
+            <div class="modal-spec-row"><span class="spec-key">Type</span><span class="spec-val">Residential Plots</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Plot Size</span><span class="spec-val">100 Sq. Yards</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Launch Date</span><span class="spec-val">12 January 2026</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Status</span><span class="spec-val">100% Sold Out ✓</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-title">Highlights</div>
+          <div class="modal-amenities">
+            <span class="amenity-tag">Clear Title Deeds</span>
+            <span class="amenity-tag">100% Sold Out</span>
+            <span class="amenity-tag">Near Nandigama</span>
+            <span class="amenity-tag">Successful Handover</span>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-4')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
-    </div>
-  </div>
-</div>
-
-<div class="proj-modal-overlay" id="modal-5" onclick="if(event.target===this)closeModal('modal-5')">
-  <div class="proj-modal">
-    <button class="modal-close" onclick="closeModal('modal-5')">✕</button>
-    <div class="modal-hero-img"><span class="modal-hero-status status-upcoming">Upcoming</span><div class="modal-hero-price">Price on Request</div></div>
-    <div class="modal-body">
-      <div class="modal-title">Infra Business Park</div>
-      <div class="modal-loc">Vijayawada Ring Road, Andhra Pradesh</div>
-      <p class="modal-desc">Upcoming commercial landmark on the Ring Road offering modern office suites, retail shops, and commercial spaces with excellent connectivity.</p>
-      <div class="modal-grid">
-        <div><div class="modal-section-title">Project Details</div><div class="modal-specs">
-          <div class="modal-spec-row"><span class="spec-key">Type</span><span class="spec-val">Commercial</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Spaces</span><span class="spec-val">Office, Retail, Showroom</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Area Range</span><span class="spec-val">500 – 5,000 sq ft</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Floors</span><span class="spec-val">G + 12 Floors</span></div>
-          <div class="modal-spec-row"><span class="spec-key">Possession</span><span class="spec-val">2028</span></div>
-        </div></div>
-        <div><div class="modal-section-title">Amenities</div><div class="modal-amenities">
-          <span class="amenity-tag">Premium Lobby</span><span class="amenity-tag">Ample Parking</span>
-          <span class="amenity-tag">Power Backup</span><span class="amenity-tag">24/7 Security</span>
-          <span class="amenity-tag">Passenger Lifts</span><span class="amenity-tag">Food Court</span>
-        </div></div>
+      <div style="background:#fdeee8;border:1px solid rgba(212,64,10,.15);border-radius:6px;padding:1rem 1.2rem;margin-bottom:1.5rem;text-align:center;">
+        <div style="font-size:.8rem;color:#a83108;font-weight:600;">Phase 1 is sold out — Phase 2 is now open!</div>
+        <div style="font-size:.78rem;color:#9e9484;margin-top:.3rem;">100 Sq. Yards @ ₹2,00,000 · Launched 13 March 2026</div>
       </div>
-      <div class="modal-footer"><a href="/#contact" class="btn-gold" onclick="closeModal('modal-5')">Enquire Now</a><a href="#" class="btn-outline" download>Download Brochure</a></div>
+      <div class="modal-footer">
+        <a href="/#contact" class="btn-gold">Enquire Phase 2</a>
+        <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" class="btn-outline">Get Directions</a>
+      </div>
     </div>
   </div>
 </div>
@@ -351,50 +322,6 @@
   <img class="lightbox-img" id="lbImg" src="" alt="Project"/>
 </div>
 
-<footer>
-  <div class="footer-grid">
-    <div>
-      <div class="footer-logo"><img src="/images/logo.png" alt="R Dream Infra"/></div>
-      <p class="footer-desc">Building premium residential and commercial spaces in Vijayawada with a focus on quality, trust, and modern living.</p>
-      <div class="footer-social">
-        <a class="soc-link" href="#" title="Facebook">f</a>
-        <a class="soc-link" href="#" title="Instagram">in</a>
-        <a class="soc-link" href="#" title="LinkedIn">li</a>
-        <a class="soc-link" href="#" title="YouTube">▶</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-title">Quick Links</div>
-      <ul class="footer-links">
-        <li><a href="/">Home</a></li><li><a href="/about.html">About Us</a></li>
-        <li><a href="/projects.html">Projects</a></li><li><a href="/#gallery">Gallery</a></li>
-        <li><a href="/#contact">Contact</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Projects</div>
-      <ul class="footer-links">
-        <li><a href="/projects.html">Dream Heights II</a></li><li><a href="/projects.html">Infra Greens</a></li>
-        <li><a href="/projects.html">Royal Villas</a></li><li><a href="/projects.html">Dream Enclave</a></li>
-        <li><a href="/projects.html">Business Park</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Contact</div>
-      <ul class="footer-links">
-        <li><a href="tel:+919347110914">+91 93471 10914</a></li>
-        <li><a href="mailto:info@rdreaminfra.com">info@rdreaminfra.com</a></li>
-        <li><a href="#">Auto Nagar, Kanuru</a></li>
-        <li><a href="#">Vijayawada — 520007</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">R Dream Infra © 2026. All Rights Reserved.</div>
-    <div class="footer-legal"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-use.html">Terms of Use</a></div>
-  </div>
-</footer>
-
 <script>
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 30); });
@@ -402,8 +329,6 @@
   const mob = document.getElementById('mobileMenu');
   ham.addEventListener('click', () => mob.classList.toggle('open'));
   function closeMobile() { mob.classList.remove('open'); }
-
-  // Filter
   function filterProjects(status, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -412,13 +337,9 @@
       else card.classList.add('hidden');
     });
   }
-
-  // Cards clickable
   document.querySelectorAll('.proj-card').forEach(card => {
     card.addEventListener('click', function() { openModal(this.dataset.modal); });
   });
-
-  // Modals
   function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
   function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
   function openLightbox(src) { document.getElementById('lbImg').src=src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
@@ -426,4 +347,5 @@
   document.addEventListener('keydown', e => { if (e.key==='Escape') { document.querySelectorAll('.proj-modal-overlay.open').forEach(m=>{m.classList.remove('open');document.body.style.overflow='';}); closeLightbox(); }});
 </script>
 </body>
+</html>
 </html>
