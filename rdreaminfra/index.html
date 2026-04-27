@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#d4400a"/>
+  <meta name="description" content="R Dream Infra — Premium plots, villas and apartments across Andhra Pradesh and Telangana."/>
+  <title>R Dream Infra — Building Your Dream Spaces</title>
+  <link rel="icon" type="image/png" href="/images/favicon.png"/>
+  <link rel="apple-touch-icon" href="/images/favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:    #faf8f4;
+      --white:    #ffffff;
+      --sand:     #ede9e0;
+      --border:   #ddd8cc;
+      --muted:    #9e9484;
+      --body:     #3d3830;
+      --ink:      #1c1a16;
+      --gold:     #d4400a;
+      --gold-lt:  #fdeee8;
+      --gold-dk:  #a83108;
+      --dark-bg:  #131109;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Outfit', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--cream); color: var(--body); overflow-x: hidden; margin: 0; padding: 0; }
+
+    .eyebrow { display: inline-flex; align-items: center; gap: .65rem; font-size: .7rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; }
+    .eyebrow::before { content: ''; width: 24px; height: 1.5px; background: var(--gold); flex-shrink: 0; }
+    .sec-title { font-family: var(--serif); font-size: clamp(1.9rem, 3vw, 2.9rem); font-weight: 700; color: var(--ink); line-height: 1.15; margin-bottom: 1rem; }
+    .sec-title em { font-style: italic; color: var(--gold); }
+    .sec-sub { font-size: .93rem; color: var(--muted); line-height: 1.75; max-width: 540px; }
+    .btn-gold { background: var(--gold); color: #fff; padding: .85rem 2rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: background .25s, transform .2s; }
+    .btn-gold:hover { background: var(--gold-dk); transform: translateY(-2px); }
+    .btn-outline { border: 1.5px solid var(--gold); color: var(--gold); padding: .82rem 2rem; font-family: var(--sans); font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; background: transparent; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s, color .2s; }
+    .btn-outline:hover { background: var(--gold); color: #fff; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .1s; } .delay-2 { transition-delay: .2s; } .delay-3 { transition-delay: .3s; } .delay-4 { transition-delay: .4s; }
+
+    /* NAV */
+    #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; height: 68px; display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; background: rgba(250,248,244,.97); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); transition: box-shadow .3s; }
+    #navbar.scrolled { box-shadow: 0 4px 28px rgba(0,0,0,.08); }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo img { height: 50px; width: auto; display: block; object-fit: contain; }
+    .nav-menu { display: flex; gap: 2rem; list-style: none; align-items: center; padding: 0; margin: 0; }
+    .nav-menu li { list-style: none; }
+    .nav-menu a { font-size: .78rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--body); text-decoration: none; transition: color .2s; }
+    .nav-menu a:hover { color: var(--gold); }
+    .nav-menu .nav-btn { background: var(--gold); color: #fff !important; padding: .48rem 1.2rem; border-radius: 2px; }
+    .nav-menu .nav-btn:hover { background: var(--gold-dk) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { width: 23px; height: 1.5px; background: var(--ink); display: block; }
+    .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 9998; background: var(--cream); border-bottom: 1px solid var(--border); padding: 1.5rem 5vw 2rem; flex-direction: column; gap: 1.2rem; box-shadow: 0 8px 32px rgba(0,0,0,.08); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: .88rem; font-weight: 500; letter-spacing: .06em; color: var(--body); text-decoration: none; text-transform: uppercase; padding-bottom: .8rem; border-bottom: 1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* HERO */
+    #hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 68px; }
+    .hero-bg { position: absolute; inset: 0; background: url('/images/hero.jpeg') center/cover no-repeat; background-color: #1c1a16; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, rgba(19,17,9,.92) 0%, rgba(19,17,9,.75) 55%, rgba(19,17,9,.55) 100%); }
+    .hero-content { position: relative; z-index: 2; padding: 3rem 5vw 7rem; max-width: 680px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: .7rem; font-size: .7rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem; animation: fadeUp .7s .1s both; }
+    .hero-eyebrow::before { content: ''; width: 28px; height: 1.5px; background: var(--gold); }
+    .hero-title { font-family: var(--serif); font-size: clamp(2.8rem, 5.5vw, 5.4rem); font-weight: 700; line-height: 1.06; color: #fff; margin-bottom: 1.4rem; animation: fadeUp .7s .25s both; }
+    .hero-title em { font-style: italic; color: var(--gold); display: block; }
+    .hero-sub { font-size: 1rem; line-height: 1.78; font-weight: 300; color: rgba(255,255,255,.85); max-width: 500px; margin-bottom: 2.8rem; animation: fadeUp .7s .4s both; }
+    .hero-btns { display: flex; gap: 1.2rem; flex-wrap: wrap; animation: fadeUp .7s .55s both; }
+    .hero-btn-outline { border: 1.5px solid rgba(255,255,255,.6); color: #fff; padding: .85rem 2rem; font-family: var(--sans); font-size: .8rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; background: transparent; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+    .hero-btn-outline:hover { background: rgba(255,255,255,.1); }
+    .hero-stats { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background: #c4922a; display: flex; justify-content: center; animation: fadeUp .7s .7s both; }
+    .stat-block { flex: 1; max-width: 220px; padding: 1.4rem 2rem; text-align: center; border-right: 1px solid rgba(255,255,255,.2); }
+    .stat-block:last-child { border-right: none; }
+    .stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; }
+    .stat-lbl { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.85); margin-top: .3rem; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ABOUT */
+    #about { background: #fff; display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center; padding: 4rem 6vw 5rem; }
+    .about-img-wrap { position: relative; }
+    .about-img { width: 100%; aspect-ratio: 4/5; background: url('/images/property.jpeg') center/cover no-repeat; background-color: #c8c8c8; border-radius: 3px; }
+    .about-badge { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--gold); color: #fff; padding: 1.8rem 2rem; border-radius: 3px; text-align: center; box-shadow: 0 12px 40px rgba(212,64,10,.35); }
+    .badge-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 700; line-height: 1; }
+    .badge-lbl { font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.85); margin-top: .3rem; }
+    .about-text { padding-left: 1rem; }
+    .about-body { font-size: .95rem; line-height: 1.82; color: #5a5248; margin: 1.5rem 0 2rem; }
+    .about-features { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 2.2rem; }
+    .about-feat { display: flex; align-items: center; gap: .8rem; font-size: .85rem; color: var(--body); }
+
+
+    /* SHOWCASE */
+    #showcase { background: #fff; padding: 5rem 6vw; }
+    #showcase .sec-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; }
+    .showcase-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; grid-auto-rows: 200px; }
+    .showcase-item { position: relative; overflow: hidden; border-radius: 6px; cursor: pointer; background: var(--sand); }
+    .showcase-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .showcase-img { width: 100%; height: 100%; min-height: 160px; object-fit: cover; display: block; transition: transform .5s ease; }
+    .showcase-item:nth-child(1) .showcase-img { min-height: 320px; }
+    .showcase-item:hover .showcase-img { transform: scale(1.06); }
+    .showcase-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 60%); opacity: 0; transition: opacity .3s; display: flex; align-items: flex-end; padding: 1rem; }
+    .showcase-item:hover .showcase-overlay { opacity: 1; }
+    .showcase-caption { color: #fff; font-size: .78rem; font-weight: 500; letter-spacing: .04em; }
+
+    /* REELS */
+    #reels { background: #2a2620; padding: 5rem 6vw; }
+    .reels-header { text-align: center; margin-bottom: 3rem; }
+    .reels-header .eyebrow { justify-content: center; color: var(--gold); }
+    .reels-header .eyebrow::before { background: var(--gold); }
+    .reels-header .sec-title { color: #fff; }
+    .reels-header .sec-sub { color: rgba(255,255,255,.5); margin: 0 auto; }
+    .reels-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+    .reel-wrap { border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.4); background: #000; aspect-ratio: 9/16; }
+    .reel-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* VIDEO */
+    #video-section { background: #1e1c17; padding: 6rem 6vw; text-align: center; position: relative; overflow: hidden; }
+    #video-section::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,64,10,.1) 0%, transparent 70%); }
+    #video-section .eyebrow { color: var(--gold); }
+    #video-section .eyebrow::before { background: var(--gold); }
+    #video-section .sec-title { color: #fff; margin-bottom: .8rem; }
+    #video-section .sec-sub { color: rgba(255,255,255,.5); margin: 0 auto 3rem; }
+    .video-wrapper { position: relative; max-width: 860px; margin: 0 auto; border-radius: 10px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,.5); aspect-ratio: 16/9; border: 1px solid rgba(255,255,255,.08); }
+    .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .video-note { margin-top: 1.5rem; font-size: .78rem; color: rgba(255,255,255,.35); letter-spacing: .04em; }
+
+    /* PROJECTS */
+    #projects { background: var(--cream); padding: 6rem 6vw; }
+    .projects-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; }
+    .projects-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.8rem; }
+    .projects-grid .card-wide { grid-column: span 2; }
+    .project-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform .3s, box-shadow .3s; }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(0,0,0,.1); }
+    .proj-img { aspect-ratio: 4/3; background: url('/images/property.jpeg') center/cover no-repeat; background-color: #c8d5c8; position: relative; overflow: hidden; }
+    .card-wide .proj-img { aspect-ratio: 16/9; }
+    .proj-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 55%); }
+    .proj-status { position: absolute; top: 1rem; left: 1rem; z-index: 2; font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 2px; }
+    .status-ongoing { background: var(--gold); color: #fff; }
+    .status-upcoming { background: var(--ink); color: #fff; }
+    .status-ready { background: #2e7d32; color: #fff; }
+    .status-soldout { background: #c62828; color: #fff; }
+    .proj-price { position: absolute; bottom: 1rem; left: 1rem; z-index: 2; font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: #fff; }
+    .proj-body { padding: 1.4rem 1.6rem 1.7rem; }
+    .proj-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: .3rem; }
+    .proj-loc { font-size: .78rem; color: var(--muted); margin-bottom: .6rem; }
+    .proj-tag { font-size: .75rem; color: var(--gold); font-weight: 500; }
+
+    /* WHY */
+    #why { background: #1e1c17; padding: 6rem 6vw; position: relative; overflow: hidden; }
+    #why::before { content: ''; position: absolute; top: -60px; right: -60px; width: 350px; height: 350px; border-radius: 50%; background: radial-gradient(circle, rgba(212,64,10,.12) 0%, transparent 70%); }
+    #why .eyebrow { color: var(--gold); }
+    #why .eyebrow::before { background: var(--gold); }
+    #why .sec-title { color: #fff; }
+    #why .sec-sub { color: rgba(255,255,255,.5); }
+    .why-header { margin-bottom: 4rem; }
+    .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+    .why-card { padding: 2.5rem 2rem; border: 1px solid rgba(255,255,255,.08); border-radius: 4px; background: rgba(255,255,255,.03); transition: border-color .3s, background .3s; }
+    .why-card:hover { border-color: rgba(212,64,10,.4); background: rgba(212,64,10,.05); }
+    .why-divider { width: 32px; height: 2px; background: var(--gold); margin: 1rem 0; }
+    .why-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: .7rem; }
+    .why-desc { font-size: .83rem; line-height: 1.7; color: rgba(255,255,255,.55); }
+
+    /* CTA BANNER */
+    #cta-banner { background: url('/images/property.jpeg') center/cover no-repeat; background-color: #c4922a; position: relative; padding: 7rem 6vw; text-align: center; }
+    #cta-banner::after { content: ''; position: absolute; inset: 0; background: rgba(28,26,22,.55); }
+    .cta-content { position: relative; z-index: 2; }
+    .cta-title { font-family: var(--serif); font-size: clamp(2rem,4vw,3.5rem); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 1rem; }
+    .cta-sub { font-size: .95rem; color: rgba(255,255,255,.85); margin-bottom: 2.5rem; font-weight: 300; }
+    .cta-btns { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: #fff; color: var(--gold-dk); padding: .9rem 2.2rem; font-family: var(--sans); font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: transform .2s, box-shadow .2s; }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.2); }
+    .btn-outline-white { border: 2px solid rgba(255,255,255,.8); color: #fff; padding: .88rem 2.2rem; font-family: var(--sans); font-size: .82rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: transparent; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: background .2s; }
+    .btn-outline-white:hover { background: rgba(255,255,255,.15); }
+
+    /* GALLERY */
+    #gallery { background: #fff; padding: 6rem 6vw; }
+    .gallery-header { margin-bottom: 2.5rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: auto auto; gap: 10px; }
+    .g-item { overflow: hidden; border-radius: 3px; cursor: pointer; position: relative; }
+    .g-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .g-item:nth-child(4) { grid-column: span 2; }
+    .g-img { width: 100%; height: 100%; min-height: 180px; background-size: cover; background-position: center; background-color: #c8d5c8; display: block; transition: transform .5s ease; }
+    .g-item:nth-child(1) .g-img { min-height: 380px; }
+    .g-item:hover .g-img { transform: scale(1.06); }
+    .g-overlay { position: absolute; inset: 0; background: rgba(212,64,10,0); display: flex; align-items: center; justify-content: center; transition: background .3s; }
+    .g-item:hover .g-overlay { background: rgba(212,64,10,.25); }
+    .g-icon { color: #fff; font-size: 1.8rem; opacity: 0; transition: opacity .3s, transform .3s; transform: scale(.8); }
+    .g-item:hover .g-icon { opacity: 1; transform: scale(1); }
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 99998; background: rgba(0,0,0,.92); align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 3px; object-fit: contain; }
+    .lb-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: rgba(255,255,255,.7); font-size: 2rem; cursor: pointer; transition: color .2s; }
+    .lb-close:hover { color: #fff; }
+
+    /* CONTACT */
+    #contact { background: var(--cream); padding: 6rem 6vw; display: grid; grid-template-columns: 1fr 1.3fr; gap: 5vw; align-items: start; }
+    .contact-note { font-size: .85rem; color: #6a6258; line-height: 1.7; margin: 1.5rem 0 2.5rem; padding: 1.2rem 1.5rem; border-left: 3px solid var(--gold); background: var(--gold-lt); border-radius: 0 3px 3px 0; }
+    .contact-details { display: flex; flex-direction: column; gap: 1.2rem; }
+    .cd-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .cd-icon { width: 40px; height: 40px; background: var(--gold-lt); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cd-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .cd-val { font-size: .9rem; color: var(--body); margin-top: .2rem; line-height: 1.5; }
+    .map-embed { margin-top: 2.5rem; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+    .map-embed iframe { display: block; width: 100%; height: 220px; border: none; }
+    .contact-form { background: #fff; padding: 2.5rem; border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 8px 40px rgba(0,0,0,.05); }
+    .form-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--ink); margin-bottom: .4rem; }
+    .form-sub { font-size: .82rem; color: var(--muted); margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .form-label { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--body); }
+    .form-input, .form-textarea, .form-select { border: 1px solid var(--border); background: var(--cream); padding: .78rem 1rem; font-family: var(--sans); font-size: .88rem; color: var(--ink); border-radius: 2px; outline: none; transition: border-color .2s, background .2s; }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--gold); background: #fff; }
+    .form-textarea { resize: vertical; min-height: 100px; }
+
+    /* FOOTER */
+    footer { background: #1a1814; padding: 4.5rem 6vw 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3.5rem; margin-bottom: 4rem; }
+    .footer-logo img { height: 52px; width: auto; display: block; margin-bottom: .8rem; }
+    .footer-desc { font-size: .82rem; line-height: 1.75; color: rgba(255,255,255,.5); max-width: 260px; }
+    .footer-social { display: flex; gap: .8rem; margin-top: 1.8rem; }
+    .soc-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.5); text-decoration: none; font-size: .78rem; transition: border-color .2s, color .2s; }
+    .soc-link:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-col-title { font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.8); margin-bottom: 1.4rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: .8rem; padding: 0; margin: 0; }
+    .footer-links li { list-style: none; }
+    .footer-links a { font-size: .82rem; color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-size: .75rem; color: rgba(255,255,255,.35); }
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: .72rem; color: rgba(255,255,255,.35); text-decoration: none; transition: color .2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,.7); }
+
+    /* MODAL */
+    .proj-modal-overlay { display: none; position: fixed; inset: 0; z-index: 99997; background: rgba(10,9,7,.78); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 1.5rem; }
+    .proj-modal-overlay.open { display: flex; }
+    .proj-modal { background: #fff; border-radius: 6px; max-width: 860px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 32px 80px rgba(0,0,0,.35); animation: modalIn .35s ease; }
+    @keyframes modalIn { from { opacity:0; transform:translateY(30px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+    .modal-close { position: sticky; top: 0; float: right; margin: .8rem .8rem 0 0; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; border: none; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s; z-index: 20; }
+    .modal-close:hover { background: var(--gold); }
+    .modal-hero-img { width: 100%; height: 280px; background: url('/images/property.jpeg') center/cover no-repeat; background-color: #c8c8c8; border-radius: 6px 6px 0 0; position: relative; }
+    .modal-hero-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 55%); border-radius: 6px 6px 0 0; }
+    .modal-hero-price { position: absolute; bottom: 1.2rem; left: 1.5rem; z-index: 2; font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: #fff; }
+    .modal-hero-status { position: absolute; top: 1.2rem; left: 1.5rem; z-index: 2; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .32rem .85rem; border-radius: 2px; }
+    .modal-body { padding: 2rem 2.2rem 2.5rem; }
+    .modal-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: var(--ink); margin-bottom: .3rem; }
+    .modal-loc { font-size: .82rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+    .modal-section-title { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; display: flex; align-items: center; gap: .5rem; }
+    .modal-section-title::before { content: ''; width: 16px; height: 1.5px; background: var(--gold); }
+    .modal-specs { display: flex; flex-direction: column; gap: .6rem; }
+    .modal-spec-row { display: flex; justify-content: space-between; align-items: center; padding: .55rem 0; border-bottom: 1px solid var(--sand); font-size: .85rem; }
+    .modal-spec-row:last-child { border-bottom: none; }
+    .spec-key { color: var(--muted); }
+    .spec-val { color: var(--ink); font-weight: 500; }
+    .modal-amenities { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .amenity-tag { background: var(--gold-lt); color: var(--gold-dk); font-size: .75rem; font-weight: 500; padding: .35rem .85rem; border-radius: 20px; border: 1px solid rgba(212,64,10,.15); }
+    .modal-desc { font-size: .88rem; line-height: 1.8; color: #5a5248; margin-bottom: 2rem; padding: 1.2rem 1.5rem; background: var(--cream); border-radius: 4px; border-left: 3px solid var(--gold); }
+    .modal-footer { display: flex; gap: 1rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--sand); }
+
+    /* SOLD OUT BADGE */
+    .soldout-badge { display: inline-block; background: #c62828; color: #fff; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 12px; margin-bottom: .8rem; }
+
+    /* FLOATING BUTTONS */
+    .floating-btns { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 9996; box-shadow: 0 -4px 24px rgba(0,0,0,.15); }
+    .float-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: .55rem; padding: 1rem; font-family: var(--sans); font-size: .88rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: filter .2s; }
+    .float-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .float-call { background: #1a9e4a; color: #fff; }
+    .float-enquire { background: var(--gold); color: #fff; }
+
+    /* WhatsApp Button */
+    .btn-whatsapp { background: #25d366 !important; }
+    .btn-whatsapp:hover { background: #128c7e !important; }
+
+    /* RESPONSIVE */
+    @media (min-width: 681px) { .floating-btns { display: none !important; } .hamburger { display: none !important; } }
+    @media (max-width: 1100px) { .why-grid { grid-template-columns: 1fr 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+    @media (max-width: 900px) {
+      #about { grid-template-columns: 1fr; padding: 3.5rem 5vw; }
+      .about-text { padding-left: 0; }
+      .about-badge { right: 1rem; bottom: -1rem; }
+      .about-img { aspect-ratio: 16/9; }
+      #contact { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .g-item:nth-child(1) { grid-column: span 2; }
+      .g-item:nth-child(4) { grid-column: span 1; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid .card-wide { grid-column: span 2; }
+      .showcase-grid { grid-template-columns: repeat(2,1fr); }
+      .showcase-item:nth-child(1) { grid-column: span 2; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .reels-grid { grid-template-columns: repeat(3,1fr); gap: 1rem; }
+    }
+    @media (max-width: 680px) {
+      section, #about, #contact, #stats, #showcase, #reels { padding: 3rem 4vw; }
+      #projects, #why, #gallery, #video-section, #cta-banner { padding: 3rem 4vw; }
+      .sec-title { font-size: 1.7rem; }
+      .nav-menu { display: none; }
+      .hamburger { display: flex; }
+      #navbar { padding: 0 4vw; }
+      .hero-content { padding: 2rem 4vw 6rem; }
+      .hero-title { font-size: 2.4rem; }
+      .hero-btns { flex-direction: column; gap: .8rem; }
+      .btn-gold, .hero-btn-outline { width: 100%; text-align: center; padding: 1rem; }
+      .hero-stats { flex-wrap: wrap; }
+      .stat-block { flex: 1 1 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.2); padding: .9rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .projects-grid .card-wide { grid-column: span 1; }
+      .card-wide .proj-img { aspect-ratio: 4/3; }
+      .projects-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .why-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .why-card { padding: 1.8rem 1.4rem; }
+      .cta-btns { flex-direction: column; align-items: center; gap: .8rem; }
+      .btn-white, .btn-outline-white { width: 100%; text-align: center; justify-content: center; padding: 1rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .g-item:nth-child(1) .g-img { min-height: 220px; }
+      .g-img { min-height: 120px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      footer { padding: 3rem 4vw 1.5rem; }
+      .contact-form { padding: 1.6rem 1.2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .map-embed iframe { height: 180px; }
+      .proj-modal-overlay { padding: 0; align-items: flex-end; }
+      .proj-modal { max-height: 92vh; border-radius: 16px 16px 0 0; }
+      .modal-hero-img { height: 200px; border-radius: 16px 16px 0 0; }
+      .modal-body { padding: 1.2rem 1rem 2rem; }
+      .modal-grid { grid-template-columns: 1fr; }
+      .modal-footer { flex-direction: column; gap: .8rem; }
+      .modal-footer .btn-gold, .modal-footer .btn-outline { width: 100%; text-align: center; }
+      .floating-btns { display: flex; }
+      body { padding-bottom: 58px; }
+      .reels-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+      .showcase-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    }
+    @media (max-width: 380px) { .hero-title { font-size: 2rem; } .sec-title { font-size: 1.5rem; } }
+  
+    .hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="/"><img src="/images/logo.png" alt="R Dream Infra"/></a>
+  <ul class="nav-menu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact" class="nav-btn">Contact Us</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#why" onclick="closeMobile()">Why Us</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#contact" onclick="closeMobile()">Contact Us</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Trusted Developer — AP &amp; Telangana</div>
+    <h1 class="hero-title">Building Your <em>Dream Spaces</em></h1>
+    <p class="hero-sub">Premium plots, villas and apartments — own your land, build your future across Andhra Pradesh and Telangana.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-gold">View Projects</a>
+      <a href="#contact" class="hero-btn-outline">Schedule a Visit</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-block"><div class="stat-num">2.5+</div><div class="stat-lbl">Years Experience</div></div>
+    <div class="stat-block"><div class="stat-num">20+</div><div class="stat-lbl">Successful Projects</div></div>
+    <div class="stat-block"><div class="stat-num">100%</div><div class="stat-lbl">Client Satisfaction</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-wrap reveal">
+    <div class="about-img"></div>
+    <div class="about-badge"><div class="badge-num">10+</div><div class="badge-lbl">Years of Trust</div></div>
+  </div>
+  <div class="about-text">
+    <div class="eyebrow reveal">Who We Are</div>
+    <h2 class="sec-title reveal delay-1">Committed to Quality.<br><em>Built for You.</em></h2>
+    <p class="about-body reveal delay-2">We are a trusted real estate developer specialising in premium plots, villas and apartments across Andhra Pradesh and Telangana. From affordable residential plots to luxury gated communities — we help families own their dream land and build their future.</p>
+    <div class="about-features reveal delay-2">
+      <div class="about-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M20 6L9 17l-5-5"/></svg>Gated communities with 24/7 security</div>
+      <div class="about-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M20 6L9 17l-5-5"/></svg>Vastu-compliant floor plans</div>
+      <div class="about-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M20 6L9 17l-5-5"/></svg>On-time delivery, every time</div>
+    </div>
+    <a href="about.html" class="btn-gold reveal delay-3">Learn More About Us</a>
+  </div>
+</section>
+
+
+<!-- SHOWCASE -->
+<section id="showcase">
+  <div class="sec-header">
+    <div>
+      <div class="eyebrow reveal">Our Happy Customers</div>
+      <h2 class="sec-title reveal delay-1">Plot Handovers &amp; <em>Site Deliveries</em></h2>
+      <p class="sec-sub reveal delay-2">Real moments — real smiles. From document handovers to site deliveries, every milestone celebrated.</p>
+    </div>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-item reveal delay-1" onclick="openLightbox('/images/showcase-1.jpeg')"><img class="showcase-img" src="/images/showcase-1.jpeg" alt="Plot Handover" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Plot Document Handover</span></div></div>
+    <div class="showcase-item reveal delay-2" onclick="openLightbox('/images/showcase-2.jpeg')"><img class="showcase-img" src="/images/showcase-2.jpeg" alt="Site Delivery" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Site Delivery</span></div></div>
+    <div class="showcase-item reveal delay-2" onclick="openLightbox('/images/showcase-3.jpeg')"><img class="showcase-img" src="/images/showcase-3.jpeg" alt="Happy Customers" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Happy Customers</span></div></div>
+    <div class="showcase-item reveal delay-3" onclick="openLightbox('/images/showcase-4.jpeg')"><img class="showcase-img" src="/images/showcase-4.jpeg" alt="Document Handover" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Document Handover</span></div></div>
+    <div class="showcase-item reveal delay-3" onclick="openLightbox('/images/showcase-5.jpeg')"><img class="showcase-img" src="/images/showcase-5.jpeg" alt="Project Completion" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Project Completion</span></div></div>
+    <div class="showcase-item reveal delay-4" onclick="openLightbox('/images/showcase-6.jpeg')"><img class="showcase-img" src="/images/showcase-6.jpeg" alt="Site Visit" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Site Visit</span></div></div>
+    <div class="showcase-item reveal delay-1" onclick="openLightbox('/images/showcase-7.jpeg')"><img class="showcase-img" src="/images/showcase-7.jpeg" alt="Handover Ceremony" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Handover Ceremony</span></div></div>
+    <div class="showcase-item reveal delay-2" onclick="openLightbox('/images/showcase-8.jpeg')"><img class="showcase-img" src="/images/showcase-8.jpeg" alt="Plot Registration" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Plot Registration</span></div></div>
+    <div class="showcase-item reveal delay-3" onclick="openLightbox('/images/showcase-9.jpeg')"><img class="showcase-img" src="/images/showcase-9.jpeg" alt="Customer Celebration" onerror="this.parentElement.style.background='#c8d5c8'"/><div class="showcase-overlay"><span class="showcase-caption">Customer Celebration</span></div></div>
+  </div>
+</section>
+
+<!-- REELS -->
+<section id="reels">
+  <div class="reels-header">
+    <div class="eyebrow reveal">Watch Us in Action</div>
+    <h2 class="sec-title reveal delay-1">See Our <em>Latest Reels</em></h2>
+    <p class="sec-sub reveal delay-2">Follow <strong style="color:var(--gold);">@rdreaminfradevelopers</strong> on Instagram for project updates, site visits and client stories.</p>
+  </div>
+  <div class="reels-grid">
+    <div class="reel-wrap reveal delay-1"><iframe src="https://www.instagram.com/reel/DTXGVhgkqDo/embed/" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe></div>
+    <div class="reel-wrap reveal delay-2"><iframe src="https://www.instagram.com/reel/DT8M2Kwkgq4/embed/" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe></div>
+    <div class="reel-wrap reveal delay-3"><iframe src="https://www.instagram.com/reel/DU4qJgCjzu4/embed/" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe></div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video-section">
+  <div class="eyebrow reveal" style="justify-content:center;">Our Story on Video</div>
+  <h2 class="sec-title reveal delay-1">Watch Our <em>Venture Video</em></h2>
+  <p class="sec-sub reveal delay-2" style="margin:0 auto 3rem;">See how R Dream Infra is transforming lives across Andhra Pradesh and Telangana.</p>
+  <div class="video-wrapper reveal delay-2">
+    <iframe src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID?rel=0&modestbranding=1" title="R Dream Infra" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <p class="video-note">Click to play · Best viewed in full screen</p>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="eyebrow reveal">Our Signature Projects</div>
+      <h2 class="sec-title reveal delay-1">Plots, Villas &amp; <em>Apartments</em></h2>
+      <p class="sec-sub reveal delay-2">From affordable residential plots to premium gated communities across AP &amp; Telangana.</p>
+    </div>
+    <a href="projects.html" class="btn-outline reveal delay-2">All Projects</a>
+  </div>
+  <div class="projects-grid">
+
+    <!-- Dream Land Projects Phase 2 - FEATURED -->
+    <div class="project-card card-wide reveal delay-1" data-modal="modal-dreamland">
+      <div class="proj-img" style="background-image:url('/images/dreamland-phase2.jpeg')"><span class="proj-status status-ongoing">Phase 2 — Now Open</span><div class="proj-price">₹2,00,000 / 100 Sq.Yds</div></div>
+      <div class="proj-body">
+        <div class="proj-name">Dream Land Projects — Konayapalem</div>
+        <div class="proj-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+        <div class="proj-tag">Residential Plots · 100 Sq. Yards · Phase 2 Launched 13 Mar 2026</div>
+      </div>
+    </div>
+
+    <!-- Dream Land Projects Phase 1 - SOLD OUT -->
+    <div class="project-card reveal delay-2" data-modal="modal-dreamland-p1">
+      <div class="proj-img" style="background-image:url('/images/dreamland-phase1.jpeg')"><span class="proj-status status-soldout">Sold Out</span><div class="proj-price">Phase 1</div></div>
+      <div class="proj-body">
+        <div class="proj-name">Dream Land Projects — Phase 1</div>
+        <div class="proj-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+        <div class="proj-tag">Residential Plots · 100 Sq. Yards · Launched 12 Jan 2026</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-header">
+    <div class="eyebrow reveal">Our Advantage</div>
+    <h2 class="sec-title reveal delay-1">Why Choose <em>R Dream Infra</em></h2>
+    <p class="sec-sub reveal delay-2">We combine experience with a commitment to delivering properties that truly transform lives across AP &amp; Telangana.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal delay-1"><div class="why-divider"></div><div class="why-title">Prime Locations</div><p class="why-desc">Strategically located properties close to schools, hospitals, IT hubs, and transport links across AP &amp; Telangana.</p></div>
+    <div class="why-card reveal delay-2"><div class="why-divider"></div><div class="why-title">Quality Construction</div><p class="why-desc">Modern architecture blended with durable materials and precision engineering for a lasting legacy.</p></div>
+    <div class="why-card reveal delay-3"><div class="why-divider"></div><div class="why-title">Affordable Pricing</div><p class="why-desc">Exceptional value for money without compromise — flexible payment plans and home loan assistance.</p></div>
+    <div class="why-card reveal delay-4"><div class="why-divider"></div><div class="why-title">Trusted Developer</div><p class="why-desc">2.5+ years of excellence, 20+ successful projects, and 100% client satisfaction across Andhra Pradesh and Telangana.</p></div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="cta-content reveal">
+    <h2 class="cta-title">Ready to find your<br>dream property?</h2>
+    <p class="cta-sub">Talk to our experts today. Site visits available 7 days a week.</p>
+    <div class="cta-btns">
+      <a href="#contact" class="btn-white">Contact Us</a>
+      <a href="#" class="btn-outline-white" download>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Brochure
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="display:none;">
+  <div class="gallery-header">
+    <div class="eyebrow reveal">Visual Tour</div>
+    <h2 class="sec-title reveal delay-1">Explore Our <em>Spaces</em></h2>
+    <p class="sec-sub reveal delay-2">A glimpse into the quality, design, and lifestyle that R Dream Infra delivers.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="g-item reveal delay-1" onclick="openLightbox('/images/gallery-1.jpeg')" style="background-image:url('/images/gallery-1.jpeg')"><div class="g-img" style="background-image:url('/images/gallery-1.jpeg')"></div><div class="g-overlay"><span class="g-icon">+</span></div></div>
+    <div class="g-item reveal delay-2" onclick="openLightbox('/images/gallery-2.jpeg')"><div class="g-img" style="background-image:url('/images/gallery-2.jpeg')"></div><div class="g-overlay"><span class="g-icon">+</span></div></div>
+    <div class="g-item reveal delay-2" onclick="openLightbox('/images/gallery-3.jpeg')"><div class="g-img" style="background-image:url('/images/gallery-3.jpeg')"></div><div class="g-overlay"><span class="g-icon">+</span></div></div>
+    <div class="g-item reveal delay-1" onclick="openLightbox('/images/gallery-4.jpeg')"><div class="g-img" style="background-image:url('/images/gallery-4.jpeg')"></div><div class="g-overlay"><span class="g-icon">+</span></div></div>
+    <div class="g-item reveal delay-3" onclick="openLightbox('/images/gallery-5.jpeg')"><div class="g-img" style="background-image:url('/images/gallery-5.jpeg')"></div><div class="g-overlay"><span class="g-icon">+</span></div></div>
+    <div class="g-item reveal delay-3" onclick="openLightbox('/images/gallery-6.jpeg')"><div class="g-img" style="background-image:url('/images/gallery-6.jpeg')"></div><div class="g-overlay"><span class="g-icon">+</span></div></div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img class="lightbox-img" id="lbImg" src="" alt="Gallery"/>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div>
+    <div class="eyebrow reveal">Get In Touch</div>
+    <h2 class="sec-title reveal delay-1">We'd Love to<br><em>Hear From You</em></h2>
+    <div class="contact-note reveal delay-2">Our team will contact you within <strong>24 hours</strong> of your enquiry. Site visits available 7 days a week, 9 AM – 7 PM.</div>
+    <div class="contact-details reveal delay-2">
+      <div class="cd-item">
+        <div class="cd-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="cd-label">Address</div><div class="cd-val">1st Floor, Flat No: 80, Makineni Swimming Pool Club,<br>Mahanadu Rd, Auto Nagar, Kanuru,<br>Andhra Pradesh 520007</div></div>
+      </div>
+      <div class="cd-item">
+        <div class="cd-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div><div class="cd-label">Phone</div><div class="cd-val"><a href="tel:+919347110914" style="color:inherit;">+91 93471 10914</a></div></div>
+      </div>
+      <div class="cd-item">
+        <div class="cd-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="cd-label">Email</div><div class="cd-val">info@rdreaminfra.com</div></div>
+      </div>
+    </div>
+    <div class="map-embed reveal delay-3">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.123!2d80.6177!3d16.5080!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sAuto+Nagar+Kanuru!5e0!3m2!1sen!2sin!4v1700000000000" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="contact-form reveal delay-2">
+    <div class="form-title">Send an Enquiry</div>
+    <div class="form-sub">Fill in your details — we'll reach you on WhatsApp instantly!</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" id="enq-name" type="text" placeholder="Your Name"/></div>
+      <div class="form-group"><label class="form-label">Phone *</label><input class="form-input" id="enq-phone" type="tel" placeholder="+91 00000 00000"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="enq-email" type="email" placeholder="you@example.com"/></div>
+    <div class="form-group">
+      <label class="form-label">Interested Project *</label>
+      <select class="form-select" id="enq-project">
+        <option value="">— Select a Project —</option>
+        <option>Dream Land Projects — Phase 2 (Konayapalem)</option>
+        <option>Dream Land Projects — Phase 1 (Sold Out)</option>
+        <option>Other / Not Sure Yet</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" id="enq-message" placeholder="Tell us your requirements — budget, preferred location, plot size…"></textarea></div>
+    <button class="btn-gold" style="width:100%;text-align:center;padding:1rem;display:flex;align-items:center;justify-content:center;gap:.6rem;" onclick="submitToWhatsApp()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Send via WhatsApp
+    </button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><img src="/images/logo.png" alt="R Dream Infra"/></div>
+      <p class="footer-desc">Building premium plots, villas and apartments across Andhra Pradesh and Telangana with a focus on quality, trust, and modern living.</p>
+      <div class="footer-social">
+        <a class="soc-link" href="https://www.facebook.com/p/R-Dream-Infra-Developers-61566559899826/" target="_blank" title="Facebook">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+    </a>
+        <a class="soc-link" href="https://www.instagram.com/rdreaminfradevelopers" target="_blank" title="Instagram">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+        <a class="soc-link" href="#" title="YouTube">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+    </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Projects</div>
+      <ul class="footer-links">
+        <li><a href="projects.html">Dream Land Phase 2</a></li>
+        <li><a href="projects.html">Dream Land Phase 1</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+919347110914">+91 93471 10914</a></li>
+        <li><a href="mailto:info@rdreaminfra.com">info@rdreaminfra.com</a></li>
+        <li><a href="#">Auto Nagar, Kanuru</a></li>
+        <li><a href="#">AP — 520007</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">R Dream Infra © 2026. All Rights Reserved.<br><span style="font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:.06em;">Designed &amp; Developed by AKHIL MATTA</span></div>
+    <div class="footer-legal">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-use.html">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<!-- DREAM LAND PHASE 2 MODAL -->
+<div class="proj-modal-overlay" id="modal-dreamland" onclick="if(event.target===this)closeModal('modal-dreamland')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-dreamland')">✕</button>
+    <div class="modal-hero-img" style="background-image:url('/images/dreamland-phase2.jpeg')">
+      <span class="modal-hero-status status-ongoing">Phase 2 — Now Open</span>
+      <div class="modal-hero-price">₹2,00,000 / 100 Sq.Yds</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-title">Dream Land Projects — Konayapalem</div>
+      <div class="modal-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+      <div style="margin-bottom:1rem;">
+        <span class="soldout-badge" style="background:#c62828;">Phase 1 — Sold Out</span>
+        &nbsp;
+        <span style="display:inline-block;background:#e8f5e9;color:#2e7d32;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:12px;">Phase 2 — Available Now</span>
+      </div>
+      <p class="modal-desc">Dream Land Projects is our flagship plot venture near Nandigama. Phase 1 was a grand success and completely sold out. Phase 2 officially launched on 13th March 2026 with premium residential plots at an exclusive price. Own your land today and build your dream home!</p>
+      <div class="modal-grid">
+        <div>
+          <div class="modal-section-title">Project Details</div>
+          <div class="modal-specs">
+            <div class="modal-spec-row"><span class="spec-key">Type</span><span class="spec-val">Residential Plots</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Plot Size</span><span class="spec-val">100 Sq. Yards</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Price</span><span class="spec-val">₹2,00,000 per plot</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Phase 1</span><span class="spec-val">Sold Out ✓</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Phase 2 Launch</span><span class="spec-val">13 March 2026</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Location</span><span class="spec-val">Near Nandigama, AP</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-title">Highlights</div>
+          <div class="modal-amenities">
+            <span class="amenity-tag">Clear Title Deeds</span>
+            <span class="amenity-tag">Spot Registration</span>
+            <span class="amenity-tag">Near Nandigama</span>
+            <span class="amenity-tag">Road Access</span>
+            <span class="amenity-tag">Vastu Compliant</span>
+            <span class="amenity-tag">Affordable Price</span>
+          </div>
+          <div style="margin-top:1.2rem;padding:1rem;background:#e8f5e9;border-radius:6px;border-left:3px solid #2e7d32;">
+            <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#2e7d32;margin-bottom:.4rem;">Location</div>
+            <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" style="font-size:.85rem;color:#2e7d32;text-decoration:none;display:flex;align-items:center;gap:.4rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              View on Google Maps →
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#contact" class="btn-gold" onclick="closeModal('modal-dreamland')">Enquire Now</a>
+        <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" class="btn-outline">Get Directions</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DREAM LAND PHASE 1 MODAL - SOLD OUT -->
+<div class="proj-modal-overlay" id="modal-dreamland-p1" onclick="if(event.target===this)closeModal('modal-dreamland-p1')">
+  <div class="proj-modal">
+    <button class="modal-close" onclick="closeModal('modal-dreamland-p1')">✕</button>
+    <div class="modal-hero-img" style="background-image:url('/images/dreamland-phase1.jpeg')">
+      <span class="modal-hero-status status-soldout">Sold Out</span>
+      <div class="modal-hero-price">Phase 1 — Completed</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-title">Dream Land Projects — Phase 1</div>
+      <div class="modal-loc">Konayapalem, Near Nandigama, Andhra Pradesh</div>
+      <div style="margin-bottom:1rem;">
+        <span class="soldout-badge">Phase 1 — 100% Sold Out</span>
+      </div>
+      <p class="modal-desc">Dream Land Projects Phase 1 was a grand success — all plots were sold out within a short time of launch on 12th January 2026. The overwhelming response from our customers inspired us to launch Phase 2. Thank you to all our Phase 1 buyers!</p>
+      <div class="modal-grid">
+        <div>
+          <div class="modal-section-title">Project Details</div>
+          <div class="modal-specs">
+            <div class="modal-spec-row"><span class="spec-key">Type</span><span class="spec-val">Residential Plots</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Plot Size</span><span class="spec-val">100 Sq. Yards</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Launch Date</span><span class="spec-val">12 January 2026</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Status</span><span class="spec-val">100% Sold Out ✓</span></div>
+            <div class="modal-spec-row"><span class="spec-key">Location</span><span class="spec-val">Near Nandigama, AP</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-title">Highlights</div>
+          <div class="modal-amenities">
+            <span class="amenity-tag">Clear Title Deeds</span>
+            <span class="amenity-tag">100% Sold Out</span>
+            <span class="amenity-tag">Near Nandigama</span>
+            <span class="amenity-tag">Road Access</span>
+            <span class="amenity-tag">Vastu Compliant</span>
+            <span class="amenity-tag">Successful Handover</span>
+          </div>
+          <div style="margin-top:1.2rem;padding:1rem;background:#e8f5e9;border-radius:6px;border-left:3px solid #2e7d32;">
+            <div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#2e7d32;margin-bottom:.4rem;">Location</div>
+            <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" style="font-size:.85rem;color:#2e7d32;text-decoration:none;display:flex;align-items:center;gap:.4rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              View on Google Maps →
+            </a>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--gold-lt);border:1px solid rgba(212,64,10,.15);border-radius:6px;padding:1rem 1.2rem;margin-bottom:1.5rem;text-align:center;">
+        <div style="font-size:.8rem;color:var(--gold-dk);font-weight:600;">Phase 1 is sold out — but Phase 2 is now open!</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">100 Sq. Yards @ ₹2,00,000 · Launched 13 March 2026</div>
+      </div>
+      <div class="modal-footer">
+        <a href="#contact" class="btn-gold" onclick="closeModal('modal-dreamland-p1')">Enquire Phase 2</a>
+        <a href="https://maps.app.goo.gl/yey9tKCXWpYRsT5m9" target="_blank" class="btn-outline">Get Directions</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-btns">
+  <a class="float-btn float-call" href="tel:+919347110914">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call Now
+  </a>
+  <a class="float-btn float-enquire" href="#contact" onclick="scrollToContact(event)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Enquire Now
+  </a>
+</div>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 30); });
+  const ham = document.getElementById('ham');
+  const mobileMenu = document.getElementById('mobileMenu');
+  ham.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', function() { const id = this.dataset.modal; if (id) openModal(id); });
+  });
+  function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.querySelectorAll('.proj-modal-overlay.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow = ''; }); closeLightbox(); } });
+  function openLightbox(src) { document.getElementById('lbImg').src = src; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+  function scrollToContact(e) { e.preventDefault(); const el = document.getElementById('contact'); if (el) window.scrollTo({ top: el.offsetTop - 68, behavior: 'smooth' }); }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); window.scrollTo({ top: t.offsetTop - 68, behavior: 'smooth' }); } });
+  });
+
+  // WhatsApp Enquiry
+  function submitToWhatsApp() {
+    const name    = document.getElementById('enq-name').value.trim();
+    const phone   = document.getElementById('enq-phone').value.trim();
+    const email   = document.getElementById('enq-email').value.trim();
+    const project = document.getElementById('enq-project').value;
+    const message = document.getElementById('enq-message').value.trim();
+    if (!name) { alert('Please enter your name'); return; }
+    if (!phone) { alert('Please enter your phone number'); return; }
+    const text = `👋 *New Enquiry from R Dream Infra Website*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Email:* ${email || 'Not provided'}\n*Interested In:* ${project || 'Not selected'}\n*Message:* ${message || 'No message'}\n\n_Sent from rdreaminfra.com_`;
+    window.open(`https://wa.me/919347110914?text=${encodeURIComponent(text)}`, '_blank');
+  }
+</script>
+</body>
+</html>
